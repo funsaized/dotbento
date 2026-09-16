@@ -10,6 +10,10 @@
   "plugin": ["@dietrichgebert/ponytail@4.9.0"],
 
   "permission": {
+    "external_directory": {
+      "~/Documents/programming/funsaized/**": "allow",
+      "/tmp/**": "allow",
+    },
     "bash": {
       "rm -rf *": "ask",
     },
@@ -159,9 +163,7 @@
       "variant": "xhigh",
       "color": "#6c5ce7",
       "steps": 15,
-
       "prompt": "Review as an independent senior engineer who did not author the implementation. Try to falsify the solution rather than validate it. Inspect surrounding code as necessary. Prioritize correctness bugs, security issues, regressions, broken invariants, concurrency/state problems, architectural mismatches, unnecessary complexity, and missing tests. Separate confirmed findings from speculative concerns. Do not modify files.",
-
       "permission": {
         "edit": "deny",
         "bash": {
