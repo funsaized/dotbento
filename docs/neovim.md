@@ -14,28 +14,50 @@ navigation, Git integration, and UI behavior. Dotbento does not reimplement
 those systems.
 
 Plugin releases are pinned by commit in `lazy-lock.json`. The config currently
-resolves to 37 plugins. The lockfile gives both supported platforms the same
+resolves to 61 plugins. The lockfile gives both supported platforms the same
 plugin graph after synchronization.
 
 ## Extras reflect the reference development workload
 
-The selected LazyVim extras are:
+`nvim/lazyvim.json` is the source of enabled extras. The current set is:
 
-- Neo-tree for file navigation;
-- JSON with SchemaStore support;
-- Markdown rendering and preview;
-- TypeScript with vtsls.
+- DAP core (`dap.core`) and Neovim-Lua DAP (`dap.nlua`);
+- Neo-tree, Snacks explorer, dial, and inc-rename;
+- JSON with SchemaStore support, Markdown rendering and preview;
+- TypeScript with vtsls for types and navigation;
+- TypeScript Oxc (`lang.typescript.oxc`) for oxlint diagnostics and oxfmt;
+- util extras for dotfiles and mini.hipatterns.
 
 These match the useful extras on the reference Omarchy machine. Example specs
 and the preload cache for every Omarchy theme are excluded. LazyVim's own
 Catppuccin and Tokyo Night support remains. Parity means matching active
 development capabilities, not retaining every package once downloaded.
 
+## Debugging uses DAP extras, not a custom plugin tree
+
+`dap.core` is the generic Debug Adapter Protocol stack: `nvim-dap`,
+`nvim-dap-ui`, virtual text, and Mason installation of adapters. Language
+debuggers (for example Mason's `js-debug-adapter` for JavaScript and
+TypeScript) plug into that stack. They are not extra LazyVim extras.
+
+`dap.nlua` only debugs Neovim Lua, via `one-small-step-for-vimkind`. It is
+present so the editor config itself can be stepped. It is not the TypeScript
+path.
+
 ## Formatting remains an explicit action
 
 `vim.g.autoformat` is disabled. Format-on-save can produce broad changes when
 opening an unfamiliar repository, so Dotbento leaves formatting on
 `<leader>cf`.
+
+The Oxc extra registers **oxfmt** with conform for JavaScript, TypeScript, and
+JSON, and attaches **oxlint** as an LSP. The oxfmt LSP is left disabled so
+conform stays the only format owner, matching Zed's "one owner per language"
+choice. Project-local `oxfmt` / `.oxfmtrc.json` still win when present;
+Mason's `oxfmt` is the fallback binary.
+
+vtsls remains for hover, go-to-definition, and TypeScript language features.
+Oxlint does not replace it.
 
 The formatter integration still exists. Only the trigger changes from implicit
 to deliberate.

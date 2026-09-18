@@ -60,10 +60,12 @@ this opinionated setup. macOS uses a symlink so edits remain visible to Git.
 
 The LazyVim setup matches the plugins enabled on the reference Omarchy machine:
 
-- Neo-tree
+- Neo-tree, Snacks explorer, dial, and inc-rename
 - JSON and SchemaStore support
 - Markdown rendering and preview
-- TypeScript with vtsls
+- TypeScript with vtsls (types and navigation)
+- Oxc extras: oxlint diagnostics and oxfmt via `<leader>cf`
+- DAP core (generic debugger UI) and Neovim-Lua DAP
 - the standard LazyVim editing, completion, Git, diagnostics, and UI plugins
 
 On Omarchy, Neovim loads the current theme from

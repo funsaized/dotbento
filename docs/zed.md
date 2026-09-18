@@ -26,8 +26,9 @@ CSS, SCSS, HTML, and Markdown delegate to their language server. Dotbento does
 not install another formatter solely to cover those file types.
 
 Format-on-save remains enabled in Zed. This differs from Neovim's explicit
-format command. Zed is used as the opinionated project editor, while Neovim is
-also used to inspect unfamiliar trees from the terminal.
+format command (`<leader>cf`, with oxfmt from the Oxc extra). Zed is used as
+the opinionated project editor, while Neovim is also used to inspect
+unfamiliar trees from the terminal.
 
 ## Java follows the machine
 
