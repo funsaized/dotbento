@@ -22,7 +22,7 @@ plugin graph after synchronization.
 `nvim/lazyvim.json` is the source of enabled extras. The current set is:
 
 - DAP core (`dap.core`) and Neovim-Lua DAP (`dap.nlua`);
-- Neo-tree, Snacks explorer, dial, and inc-rename;
+- Snacks explorer, dial, and inc-rename;
 - JSON with SchemaStore support, Markdown rendering and preview;
 - TypeScript with vtsls for types and navigation;
 - TypeScript Oxc (`lang.typescript.oxc`) for oxlint diagnostics and oxfmt;
@@ -108,7 +108,7 @@ preserves foreground colors and other theme attributes.
 ## Transparency belongs to the terminal
 
 The transparency plugin removes backgrounds from core windows, floating
-windows, menus, line-number areas, WhichKey, and Neo-tree. It does not define an
+windows, menus, line-number areas, and WhichKey. It does not define an
 independent opacity value.
 
 The active terminal remains the owner of actual background opacity and blur:
