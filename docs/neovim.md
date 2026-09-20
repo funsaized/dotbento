@@ -63,6 +63,29 @@ Oxlint does not replace it.
 The formatter integration still exists. Only the trigger changes from implicit
 to deliberate.
 
+## Java formatting belongs to the project, not jdtls
+
+`lang.java` still supplies nvim-jdtls for language features. It does not own
+layout. `lua/plugins/java-spotless.lua` turns jdtls formatting off and
+registers a Conform formatter named `spotless_maven`.
+
+The formatter is portable because it discovers the work from the buffer, not
+from a machine-specific path:
+
+- the nearest `pom.xml` is the module root;
+- the formatter is active only when that POM contains `spotless-maven-plugin`;
+- `./mvnw` is preferred when present, otherwise `mvn` from PATH;
+- `-DspotlessFiles` is the file path relative to that POM.
+
+Palantir JavaFormat is whatever the module's Spotless configuration already
+pins. Dotbento does not vendor a Palantir version or a style XML. Repositories
+without Spotless keep jdtls formatting disabled and get no Conform Java
+formatter, so `<leader>cf` does not invent a house style.
+
+This matches Zed's "one owner per language" rule: the Maven module is the
+owner. The same spec is copied onto Omarchy and linked on macOS, so both
+platforms run the same Maven goal against the same POM.
+
 Relative line numbers remain enabled because that matches the reference
 Omarchy setup and supports movement-oriented editing.
 

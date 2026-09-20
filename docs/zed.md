@@ -42,6 +42,12 @@ Java through the environment it launches with.
 The shell remains responsible for selecting a JDK through Homebrew, SDKMAN, or
 project-local tooling.
 
+Java layout is the same ownership rule as Neovim: the module's Spotless
+(Palantir) configuration is the formatter when the POM has
+`spotless-maven-plugin`. Zed does not pin Palantir itself. Neovim runs that
+goal through Conform (`lua/plugins/java-spotless.lua`); in Zed, format-on-save
+still uses the language server unless the project is formatted by Maven.
+
 ## Theme and typography mirror the terminal
 
 The dark theme is Catppuccin Mocha, matching the managed Ghostty profile on

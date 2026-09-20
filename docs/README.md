@@ -22,8 +22,8 @@ syntax. Use the root [README](../README.md) when you need installation steps.
 
 ## Editors and agents
 
-- [Neovim](neovim.md): LazyVim extras (DAP, Oxc), portable themes, and remote
-  clipboard behavior
+- [Neovim](neovim.md): LazyVim extras (DAP, Oxc), Spotless Java formatting,
+  portable themes, and remote clipboard behavior
 - [Zed](zed.md): formatting ownership, portable Java discovery, and shared
   visual conventions
 - [OpenCode](opencode.md): agent roles, permissions, output limits, and global
