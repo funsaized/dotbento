@@ -14,7 +14,7 @@ navigation, Git integration, and UI behavior. Dotbento does not reimplement
 those systems.
 
 Plugin releases are pinned by commit in `lazy-lock.json`. The config currently
-resolves to 61 plugins. The lockfile gives both supported platforms the same
+resolves to 62 plugins. The lockfile gives both supported platforms the same
 plugin graph after synchronization.
 
 ## Extras reflect the reference development workload
@@ -26,12 +26,13 @@ plugin graph after synchronization.
 - JSON with SchemaStore support, Markdown rendering and preview;
 - TypeScript with vtsls for types and navigation;
 - TypeScript Oxc (`lang.typescript.oxc`) for oxlint diagnostics and oxfmt;
+- Java (`lang.java`);
 - util extras for dotfiles and mini.hipatterns.
 
-These match the useful extras on the reference Omarchy machine. Example specs
-and the preload cache for every Omarchy theme are excluded. LazyVim's own
-Catppuccin and Tokyo Night support remains. Parity means matching active
-development capabilities, not retaining every package once downloaded.
+Markdownlint is disabled for both nvim-lint diagnostics and Conform fixes.
+Example specs and the preload cache for every Omarchy theme are excluded.
+LazyVim's own Catppuccin and Tokyo Night support remains. Parity means matching
+active development capabilities, not retaining every package once downloaded.
 
 ## Debugging uses DAP extras, not a custom plugin tree
 
