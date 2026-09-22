@@ -75,7 +75,7 @@ from a machine-specific path:
 - the nearest `pom.xml` is the module root;
 - the formatter is active only when that POM contains `spotless-maven-plugin`;
 - `./mvnw` is preferred when present, otherwise `mvn` from PATH;
-- `-DspotlessFiles` is the file path relative to that POM.
+- `-DspotlessFiles` is the absolute file path, regex-quoted for an exact match.
 
 Palantir JavaFormat is whatever the module's Spotless configuration already
 pins. Dotbento does not vendor a Palantir version or a style XML. Repositories

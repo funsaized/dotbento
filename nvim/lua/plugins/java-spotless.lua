@@ -47,14 +47,8 @@ return {
           end
           return "mvn"
         end,
-        args = function()
-          local root = pom_root()
-          local file = vim.api.nvim_buf_get_name(0)
-          local rel = file
-          if root then
-            rel = file:sub(#root + 2)
-          end
-          return { "-q", "spotless:apply", "-DspotlessFiles=" .. rel }
+        args = function(_, ctx)
+          return { "-q", "spotless:apply", "-DspotlessFiles=\\Q" .. ctx.filename .. "\\E" }
         end,
       }
     end,
