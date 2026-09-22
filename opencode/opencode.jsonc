@@ -149,7 +149,7 @@
     "frontend": {
       "description": "Frontend expert for React/Next.js implementation, visual design, layout, animation, responsiveness, and interaction polish",
       "mode": "all",
-      "model": "xai/grok-4.6",
+      "model": "xai/grok-4.7",
       "variant": "high",
       "color": "#e17055",
       "steps": 30,
@@ -159,7 +159,7 @@
     "reviewer": {
       "description": "Independent adversarial reviewer for correctness, architecture, security, regressions, unnecessary complexity, and missing tests",
       "mode": "subagent",
-      "model": "xai/grok-4.6",
+      "model": "xai/grok-4.7",
       "variant": "xhigh",
       "color": "#6c5ce7",
       "steps": 15,
@@ -180,7 +180,7 @@
   "provider": {
     "xai": {
       "models": {
-        "grok-4.6": {
+        "grok-4.7": {
           "variants": {
             "high": {
               "reasoningEffort": "high",
