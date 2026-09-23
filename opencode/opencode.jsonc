@@ -106,7 +106,7 @@
       "description": "Fast general-purpose research, code analysis, and bounded engineering tasks",
       "mode": "subagent",
       "model": "deepseek/deepseek-flash",
-      "steps": 20,
+      "steps": 50,
       "prompt": "Handle bounded engineering investigations efficiently. Read broadly when needed, but return concise concrete findings with file paths, relevant symbols, risks, and a recommended action. Do not make speculative architectural changes.",
     },
 
@@ -114,7 +114,7 @@
       "description": "Hard delegated engineering problems requiring deeper reasoning or autonomous coding",
       "mode": "subagent",
       "model": "deepseek/deepseek-flash",
-      "steps": 30,
+      "steps": 100,
       "prompt": "Solve difficult but bounded engineering problems independently. Inspect the relevant code before acting. Optimize for correctness over cleverness. Stay within the requested scope, verify your work, and report assumptions, changed files, and verification results.",
     },
 
@@ -122,7 +122,7 @@
       "description": "Fast read-only codebase exploration and dependency tracing",
       "mode": "subagent",
       "model": "deepseek/deepseek-flash",
-      "steps": 15,
+      "steps": 50,
       "prompt": "Explore the codebase without modifying it. Locate relevant implementations, trace control and data flow, identify dependencies and conventions, and return concise findings with file paths and symbols.",
     },
 
@@ -130,7 +130,7 @@
       "description": "Analyze screenshots, rendered UI, diagrams, and other visual material",
       "mode": "subagent",
       "model": "deepseek/deepseek-flash",
-      "steps": 15,
+      "steps": 30,
       "prompt": "Analyze visual inputs together with the relevant implementation. Identify concrete visual, layout, interaction, or rendering issues and connect findings to likely code locations when possible.",
     },
 
@@ -138,7 +138,7 @@
       "description": "Compress large documents, logs, diffs, and unfamiliar code into structured context",
       "mode": "subagent",
       "model": "deepseek/deepseek-flash",
-      "steps": 12,
+      "steps": 50,
       "prompt": "Produce a dense factual brief from the supplied material. Capture purpose, architecture, important implementation details, dependencies, patterns, risks, unresolved questions, and relevant file paths. Preserve facts; do not invent conclusions.",
     },
 
@@ -152,7 +152,7 @@
       "model": "xai/grok-4.7",
       "variant": "high",
       "color": "#e17055",
-      "steps": 30,
+      "steps": 120,
       "prompt": "Act as a senior frontend engineer and visual product designer. Inspect the project's existing component patterns, design tokens, responsive conventions, and dependencies before implementing. Produce polished, production-ready React/Next.js UI with strong hierarchy, spacing, typography, responsiveness, accessibility, interaction states, and restrained animation. Reuse existing primitives before introducing new abstractions. Verify the rendered result with Playwright when useful.",
     },
 
@@ -162,7 +162,7 @@
       "model": "xai/grok-4.7",
       "variant": "xhigh",
       "color": "#6c5ce7",
-      "steps": 15,
+      "steps": 50,
       "prompt": "Review as an independent senior engineer who did not author the implementation. Try to falsify the solution rather than validate it. Inspect surrounding code as necessary. Prioritize correctness bugs, security issues, regressions, broken invariants, concurrency/state problems, architectural mismatches, unnecessary complexity, and missing tests. Separate confirmed findings from speculative concerns. Do not modify files.",
       "permission": {
         "edit": "deny",
