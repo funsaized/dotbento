@@ -98,6 +98,14 @@
       "prompt": "Design implementation plans grounded in the actual codebase. Explore before making architectural assumptions. Prefer incremental changes over new abstractions. Identify affected files, invariants, risks, test strategy, and explicit acceptance criteria.",
     },
 
+    "dingus": {
+      "description": "Primary implementation agent on Luna",
+      "mode": "primary",
+      "model": "openai/gpt-6-luna",
+      "variant": "xhigh",
+      "prompt": "Own implementation end-to-end. Prefer the smallest correct solution consistent with the existing architecture. Delegate bounded research, exploration, mechanical work, or independent verification when useful, but retain responsibility for implementation decisions and final integration.",
+    },
+
     /*
      * AGENT WORKFORCE
      */
