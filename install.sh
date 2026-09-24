@@ -164,6 +164,7 @@ if [[ -e $opencode_json || -L $opencode_json ]]; then
 fi
 link opencode/opencode.jsonc "$CONFIG_HOME/opencode/opencode.jsonc"
 link opencode/AGENTS.md "$CONFIG_HOME/opencode/AGENTS.md"
+link opencode/plan-agent.md "$CONFIG_HOME/opencode/plan-agent.md"
 
 if [[ $PLATFORM == macos ]]; then
   link zsh/.zshrc "$HOME/.zshrc"

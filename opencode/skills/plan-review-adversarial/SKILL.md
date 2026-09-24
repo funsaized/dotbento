@@ -163,18 +163,20 @@ If a bug or code issue could have been prevented by static analysis and the plan
 
 If the repo does not use a linter or the change is too small for a rule to be meaningful, mark as **N/A** rather than rejecting.
 
-### Timeline Prohibition Check
+### Timeline and Scheduling Check
 
-**DO NOT include timelines, schedules, dates, durations, or time estimates** in plans.
+Do not include delivery timelines, schedules, deadlines, durations, or time estimates in implementation plans. Keep plans focused on technical scope, sequencing, and verification—not scheduling.
 
-**REJECT any plan that includes these.** Plans must focus on technical scope, sequencing, and verification—not scheduling. Look for red flags:
+**A plan-maintenance timestamp is allowed:** `PLAN.md` may include an `Updated:` metadata line. Treat it as document metadata, not a delivery date; do not reject a plan for that line alone. This exception does not apply to dates or timing elsewhere in the plan.
+
+**REJECT plans that include delivery timing.** Look for red flags:
 
 - Time-based phrases: "in two weeks", "by Friday", "Sprint 1", "Q1 delivery"
 - Duration estimates: "2-3 days", "a few hours", "takes about a week"
 - Scheduling language: "Phase 1: Week 1-2", "Milestone 1 due March", "target completion"
-- Calendar references: specific dates, quarters, sprints, iterations with time bounds
+- Calendar references: specific delivery dates, quarters, sprints, or iterations with time bounds
 
-If any timeline content is present, send the plan back for revision with instructions to remove all time-related content.
+If delivery timing is present, send the plan back for revision with instructions to remove it.
 
 ## Review Process
 
@@ -358,7 +360,7 @@ Write your review to the `feedback-output-path` file:
 - Single points of failure have no mitigation
 - "It should work" without verification
 - External dependencies treated as guarantees
-- Plan includes timelines, schedules, dates, durations, or time estimates
+- Plan includes delivery dates, schedules, durations, or time estimates (`Updated:` metadata is allowed)
 - Code examples missing for new functionality
 - Mocking proposed in tests
 - Weak typing proposed

@@ -88,10 +88,11 @@ MCP servers and credentials outside this repository.
 
 ## OpenCode
 
-`opencode/opencode.jsonc` and `opencode/AGENTS.md` are linked into the detected
-XDG config directory. Authentication remains in OpenCode's own credential
-store. Restart OpenCode after changing either file; configuration is loaded at
-startup.
+`opencode/opencode.jsonc`, `opencode/AGENTS.md`, and `opencode/plan-agent.md`
+are linked into the detected XDG config directory. The adversarial review skill
+definition is tracked in `opencode/skills/plan-review-adversarial/SKILL.md`.
+Authentication remains in OpenCode's own credential store. Restart OpenCode
+after changing OpenCode files; configuration is loaded at startup.
 
 ## macOS shell
 

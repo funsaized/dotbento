@@ -11,8 +11,10 @@ prompt assigns end-to-end responsibility and allows delegation without
 transferring integration ownership.
 
 The `plan` agent is separate because planning and implementation have different
-failure modes. It emphasizes architecture, invariants, risk, and acceptance
-criteria without turning every implementation task into a design exercise.
+failure modes. It investigates the repository and maintains the execution plan
+in its root `PLAN.md`; edit permission allows only paths named `PLAN.md`, and
+the prompt restricts writes to the repository root. Its full instructions live
+in `opencode/plan-agent.md`.
 
 ## Subagents are divided by job
 
@@ -86,11 +88,16 @@ job in the supported workflow.
 ## Global instructions are versioned beside the config
 
 `AGENTS.md` defines cross-project expectations for verification, delegation,
-language conventions, formatting, Git operations, and communication. Project
-instructions can override it.
+language conventions, formatting, Git operations, and communication. The Plan
+agent's detailed planning workflow lives in `plan-agent.md` beside the config.
+Project instructions can override it.
 
-Keeping this file beside `opencode.jsonc` ties behavior to the agent roster it
-describes. Both files are linked into the global OpenCode config directory.
+The tracked `plan-review-adversarial` skill permits `PLAN.md`'s `Updated:`
+metadata while still rejecting delivery dates and schedules. Keep the global
+skill copies on each machine in sync with this tracked definition.
+
+Keeping these files beside `opencode.jsonc` ties behavior to the agent roster it
+describes. The installer links them into the global OpenCode config directory.
 
 ## Credentials remain outside Git
 
