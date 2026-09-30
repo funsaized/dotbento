@@ -4,7 +4,7 @@
   "autoupdate": false,
 
   // Sol is the center of gravity.
-  "model": "openai/gpt-6-sol",
+  "model": "openai/gpt-6.1-sol",
   "default_agent": "build",
 
   "plugin": ["@dietrichgebert/ponytail@4.9.0"],
@@ -85,7 +85,7 @@
     "build": {
       "description": "Primary implementation agent",
       "mode": "primary",
-      "model": "openai/gpt-6-sol",
+      "model": "openai/gpt-6.1-sol",
       "variant": "medium",
       "prompt": "Own implementation end-to-end. Prefer the smallest correct solution consistent with the existing architecture. Delegate bounded research, exploration, mechanical work, or independent verification when useful, but retain responsibility for implementation decisions and final integration.",
     },
@@ -128,7 +128,7 @@
     "frontier": {
       "description": "Hard delegated engineering problems requiring deeper reasoning or autonomous coding",
       "mode": "subagent",
-      "model": "openai/gpt-6-sol",
+      "model": "openai/gpt-6.1-sol",
       "variant": "high",
       "steps": 100,
       "prompt": "Solve difficult but bounded engineering problems independently. Inspect the relevant code before acting. Optimize for correctness over cleverness. Stay within the requested scope, verify your work, and report assumptions, changed files, and verification results.",
