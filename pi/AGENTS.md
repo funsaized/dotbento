@@ -1,0 +1,44 @@
+# Global working rules
+
+Project instructions add specifics and override these preferences on conflict.
+
+## Environment
+
+- macOS or Omarchy Linux; editors are Zed and Neovim. Preserve Omarchy's shell and terminal defaults.
+- Common stacks: Java/Spring Boot, TypeScript/Next.js/TanStack/React, Python (AI/ML/data), and Rust (TUI/ratatui).
+- Read the project's AGENTS.md and check lockfiles before choosing a package manager or build tool.
+
+## How to work
+
+- Prefer the smallest correct solution consistent with the existing architecture. No drive-by refactors, reformatting untouched code, or speculative abstractions.
+- Investigate routine uncertainty using the repository. Ask one focused question when a consequential requirement cannot be resolved from evidence, or applicable instructions genuinely conflict.
+- Verify changes with the narrowest relevant test, lint, or build. Never imply verification that did not happen; say explicitly when a check cannot run.
+- Keep noisy output bounded, but preserve command exit status. When piping tests or builds through filters, enable `set -o pipefail` or capture the original exit status. Read saved full output when truncation hides important evidence.
+- If the same test still fails after two fix attempts, stop and summarize what you tried and what you suspect.
+
+## Code conventions
+
+- TypeScript: assume strict mode; no `any` without a comment justifying it; functional React components only.
+- Java: constructor injection, no field `@Autowired`; annotate nullability at boundaries.
+- Rust: no `unwrap()` or `expect()` outside tests and `main()`; propagate errors with `?`.
+- Comments explain why, not narrate obvious code.
+
+## Formatting
+
+- Format only modified files; project instructions take precedence.
+- Rust: use rustfmt on changed files, or `cargo fmt` when it will not introduce unrelated changes.
+- TS/JS: use oxfmt and oxlint on modified files, rather than Prettier or ESLint, unless project instructions specify otherwise.
+- Java: respect existing Checkstyle/Spotless configuration; otherwise preserve existing formatting.
+
+## Git and sensitive files
+
+- Never commit or push unless explicitly asked. Staging is allowed.
+- Use conventional commit messages: imperative, under 72 characters, with a body only when the reason is not obvious.
+- Never commit secrets, environment files, or credentials. If you encounter an exposed secret, flag it without repeating its value and stop.
+- Ask before destructive operations, reading secret-bearing `.env` files, or changing configuration outside the requested scope. These instructions are behavioral guidance, not a sandbox or enforced approval gate.
+
+## Communication
+
+- Lead with the outcome, then relevant details. No preamble or restating the request.
+- Name consequential judgment calls so they can be overridden.
+- Be concise; report changed files, verification, and unresolved issues when finishing implementation.

@@ -3,6 +3,8 @@ set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+PI_AGENT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
+PONYTAIL_SOURCE="git:github.com/DietrichGebert/ponytail@e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
 STAMP="$(date +%Y%m%d-%H%M%S)-$$"
 DRY=0
 PACKAGES=0
@@ -41,13 +43,14 @@ case "$(uname -s)" in
 esac
 
 command -v git >/dev/null || { echo "Git is required to install shared Git settings." >&2; exit 1; }
+command -v python3 >/dev/null || { echo "Python 3 is required to merge Pi settings." >&2; exit 1; }
 
 if (( PACKAGES )) && [[ $PLATFORM == macos ]] && ! command -v brew >/dev/null; then
   echo "Homebrew is required: https://brew.sh" >&2
   exit 1
 fi
 
-printf 'Dotbento plan for %s (%s): Zed, Neovim, OpenCode, Git' "$PLATFORM" "$CONFIG_HOME"
+printf 'Dotbento plan for %s (%s): Zed, Neovim, OpenCode, Pi, Git' "$PLATFORM" "$CONFIG_HOME"
 [[ $PLATFORM == macos ]] && printf ', Zsh, Starship, Ghostty'
 (( PACKAGES )) && printf '; install requested packages'
 printf '\nExisting files will be backed up before replacement.\n'
@@ -165,6 +168,11 @@ fi
 link opencode/opencode.jsonc "$CONFIG_HOME/opencode/opencode.jsonc"
 link opencode/AGENTS.md "$CONFIG_HOME/opencode/AGENTS.md"
 link opencode/plan-agent.md "$CONFIG_HOME/opencode/plan-agent.md"
+link pi/AGENTS.md "$PI_AGENT_DIR/AGENTS.md"
+link pi/prompts/review.md "$PI_AGENT_DIR/prompts/review.md"
+pi_settings_args=("$REPO/pi/settings.json" "$PI_AGENT_DIR/settings.json" "$STAMP")
+(( DRY )) && pi_settings_args+=(--dry-run)
+python3 "$REPO/scripts/configure-pi.py" "${pi_settings_args[@]}"
 
 if [[ $PLATFORM == macos ]]; then
   link zsh/.zshrc "$HOME/.zshrc"
@@ -188,6 +196,13 @@ else
 fi
 
 if (( PACKAGES )); then
+  if (( DRY )); then
+    printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE"
+  elif command -v pi >/dev/null; then
+    pi install "$PONYTAIL_SOURCE"
+  else
+    warn "Pi is not installed; install it separately, then run: pi install $PONYTAIL_SOURCE"
+  fi
   if [[ $PLATFORM == macos ]]; then
     formulas=(starship eza bat fd ripgrep fzf zoxide lazygit direnv jq neovim lua-language-server stylua shfmt zsh-autosuggestions zsh-syntax-highlighting opencode)
     casks=(ghostty zed font-meslo-lg-nerd-font)
@@ -208,4 +223,4 @@ if (( PACKAGES )); then
   fi
 fi
 
-echo "Done. Restart OpenCode after configuration changes."
+echo "Done. Restart OpenCode after configuration changes; reload Pi resources and start a new Pi session for model defaults."

@@ -2,9 +2,9 @@
 
 An opinionated bootstrap for the development machines I support:
 
-- macOS with Zsh, Ghostty, Starship, Zed, Neovim, and OpenCode
-- Omarchy Linux with its shell and terminal defaults, plus Zed, Neovim, and
-  OpenCode configuration
+- macOS with Zsh, Ghostty, Starship, Zed, Neovim, OpenCode, and Pi
+- Omarchy Linux with its shell and terminal defaults, plus Zed, Neovim,
+  OpenCode, and Pi configuration
 
 Dotbento intentionally does not replace Omarchy's Bash, Starship, or terminal
 configuration.
@@ -18,7 +18,7 @@ each supported tool:
 - [Ghostty](docs/ghostty.md), [Zsh](docs/zsh.md), and
   [Starship](docs/starship.md)
 - [Neovim](docs/neovim.md), [Zed](docs/zed.md), and
-  [OpenCode](docs/opencode.md)
+  [OpenCode](docs/opencode.md) and [Pi](docs/pi.md)
 - the shared [visual system](docs/visual-system.md)
 
 ## Install
@@ -34,7 +34,8 @@ cd ~/dotbento
 ```
 
 Existing files are moved to `<name>.bak-<timestamp>` before replacement.
-Package installation never happens unless `--packages` is passed. Without
+Python 3 is required to merge Pi settings. Package installation never happens
+unless `--packages` is passed. Without
 `--yes`, all changes require interactive approval.
 
 Dotbento detects macOS and Omarchy Linux. Other platforms stop without making
@@ -47,6 +48,7 @@ changes.
 | Zed | symlink | symlink |
 | Neovim | symlink | copy |
 | OpenCode | symlink | symlink |
+| Pi | instructions/prompts symlink; settings merge | instructions/prompts symlink; settings merge |
 | Git | included from existing config | included from existing config |
 | Zsh, Starship, Ghostty | symlink | keep Omarchy defaults |
 
@@ -94,6 +96,34 @@ definition is tracked in `opencode/skills/plan-review-adversarial/SKILL.md`.
 Authentication remains in OpenCode's own credential store. Restart OpenCode
 after changing OpenCode files; configuration is loaded at startup.
 
+## Pi
+
+`pi/AGENTS.md` and `pi/prompts/review.md` are linked into `~/.pi/agent` (or
+`PI_CODING_AGENT_DIR`). `pi/settings.json` is merged into the machine's settings
+with a backup when changes are needed; theme, packages, device identity, and
+unrelated preferences remain local. Authentication and sessions are never copied
+into this repository.
+
+The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6.1 Sol at low,
+and DeepSeek V4.1 Flash at low. DeepSeek's API identifier is `deepseek-flash`.
+Run `/reload` after resource changes; start a new session to apply startup model
+defaults. Existing sessions can restore their previous model.
+
+Use `/review [focus]` in a fresh session for independent adversarial review. It
+is a prompt, not an enforced read-only agent or an automatic model switch.
+
+Install Pi separately using its [installation instructions](https://pi.dev),
+then authenticate with `/login`. `--packages` installs Ponytail when `pi` is on
+PATH, pinned to the reviewed 4.10.0 release commit. For a Pi-only install:
+
+```bash
+pi install git:github.com/DietrichGebert/ponytail@e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156
+```
+
+Ponytail starts in its own default mode (`full` unless configured otherwise).
+Use `/ponytail status` to inspect it or `/ponytail off` to disable it for a
+session. Herdr's Pi integration remains managed by Herdr, not Dotbento.
+
 ## macOS shell
 
 The Zsh setup initializes Starship, direnv, zoxide, fzf, and optional language
@@ -127,5 +157,6 @@ git config --global user.email "you@example.com"
 ```bash
 ./scripts/scan-secrets.sh
 bash -n install.sh scripts/scan-secrets.sh zsh/.zshrc
+python3 -m unittest discover -s scripts -p 'test_*.py'
 XDG_CONFIG_HOME="$PWD" nvim --headless +qa
 ```

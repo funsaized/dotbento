@@ -28,6 +28,8 @@ syntax. Use the root [README](../README.md) when you need installation steps.
   visual conventions
 - [OpenCode](opencode.md): agent roles, permissions, output limits, and global
   working rules
+- [Pi](pi.md): minimal instructions, explicit model scope, review prompts, and
+  machine-local settings ownership
 
 ## Documentation model
 
