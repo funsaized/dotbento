@@ -11,7 +11,10 @@ Project instructions add specifics and override these preferences on conflict.
 ## How to work
 
 - Prefer the smallest correct solution consistent with the existing architecture. No drive-by refactors, reformatting untouched code, or speculative abstractions.
+- Read files fully before editing them. For investigations or broad changes, trace the relevant flow rather than relying on search snippets.
+- Verify unfamiliar dependency APIs against installed types/source or version-matched documentation; do not guess.
 - Investigate routine uncertainty using the repository. Ask one focused question when a consequential requirement cannot be resolved from evidence, or applicable instructions genuinely conflict.
+- Prefer isolated tests. Ask before checks that use live credentials, incur charges, or mutate external services or machine configuration.
 - Verify changes with the narrowest relevant test, lint, or build. Never imply verification that did not happen; say explicitly when a check cannot run.
 - Keep noisy output bounded, but preserve command exit status. When piping tests or builds through filters, enable `set -o pipefail` or capture the original exit status. Read saved full output when truncation hides important evidence.
 - If the same test still fails after two fix attempts, stop and summarize what you tried and what you suspect.
@@ -22,6 +25,7 @@ Project instructions add specifics and override these preferences on conflict.
 - Java: constructor injection, no field `@Autowired`; annotate nullability at boundaries.
 - Rust: no `unwrap()` or `expect()` outside tests and `main()`; propagate errors with `?`.
 - Comments explain why, not narrate obvious code.
+- Do not preserve backward compatibility unless the user asks for it.
 
 ## Formatting
 
@@ -33,12 +37,16 @@ Project instructions add specifics and override these preferences on conflict.
 ## Git and sensitive files
 
 - Never commit or push unless explicitly asked. Staging is allowed.
+- Treat pre-existing changes as user or other-session work. Do not overwrite, revert, or stash them.
+- Stage explicit paths only, never `git add .` or `git add -A`. Before committing, inspect the staged diff and include only this session's changes.
+- Do not bypass Git hooks unless explicitly asked.
 - Use conventional commit messages: imperative, under 72 characters, with a body only when the reason is not obvious.
 - Never commit secrets, environment files, or credentials. If you encounter an exposed secret, flag it without repeating its value and stop.
 - Ask before destructive operations, reading secret-bearing `.env` files, or changing configuration outside the requested scope. These instructions are behavioral guidance, not a sandbox or enforced approval gate.
 
 ## Communication
 
+- When asked a question or for analysis, answer first. Do not treat it as permission to implement changes.
 - Lead with the outcome, then relevant details. No preamble or restating the request.
 - Name consequential judgment calls so they can be overridden.
 - Be concise; report changed files, verification, and unresolved issues when finishing implementation.
