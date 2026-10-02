@@ -6,12 +6,12 @@
     "openai/gpt-6-luna": "xhigh",
     "openai/gpt-6-astra": "medium",
     "openai/gpt-6.1-sol": "low",
-    "deepseek/deepseek-flash": "low"
+    "deepseek/deepseek-flash": "xhigh"
   },
   "enabledModels": [
     "openai/gpt-6-luna:xhigh",
     "openai/gpt-6-astra:medium",
     "openai/gpt-6.1-sol:low",
-    "deepseek/deepseek-flash:low"
+    "deepseek/deepseek-flash:xhigh"
   ]
 }

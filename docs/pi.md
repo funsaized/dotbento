@@ -8,8 +8,9 @@ system prompt remains intact.
 ## Model selection is explicit
 
 The scoped cycle contains GPT-6 Luna at xhigh, GPT-6 Astra at medium,
-GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at low. Luna is the startup default. DeepSeek's direct API calls
-V4.1 Flash `deepseek-flash`; there is no custom provider or model alias file.
+GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at xhigh. Luna is the startup
+default. DeepSeek's direct API calls V4.1 Flash `deepseek-flash`; there is no
+custom provider or model alias file.
 Thinking levels are set both per model and in cycle entries so a model change
 does not accidentally carry Luna's xhigh setting into lighter work.
 

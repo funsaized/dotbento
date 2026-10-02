@@ -106,7 +106,8 @@ unrelated preferences remain local. Authentication and sessions are never copied
 into this repository.
 
 The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6 Astra at
-medium, GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at low. DeepSeek's API identifier is `deepseek-flash`.
+medium, GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at xhigh. DeepSeek's API
+identifier is `deepseek-flash`.
 Run `/reload` after resource changes; start a new session to apply startup model
 defaults. Existing sessions can restore their previous model.
 
