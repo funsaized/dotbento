@@ -7,8 +7,8 @@ system prompt remains intact.
 
 ## Model selection is explicit
 
-The scoped cycle contains GPT-6 Luna at xhigh, GPT-6.1 Sol at low, and DeepSeek
-V4.1 Flash at low. Luna is the startup default. DeepSeek's direct API calls
+The scoped cycle contains GPT-6 Luna at xhigh, GPT-6 Astra at medium,
+GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at low. Luna is the startup default. DeepSeek's direct API calls
 V4.1 Flash `deepseek-flash`; there is no custom provider or model alias file.
 Thinking levels are set both per model and in cycle entries so a model change
 does not accidentally carry Luna's xhigh setting into lighter work.
@@ -27,6 +27,34 @@ modifications. It does not spawn a child agent, select a model, or enforce tool
 permissions. A fresh session avoids exposing the reviewer to the implementation
 discussion. Independent review automation can be added later if the manual
 workflow becomes a bottleneck.
+
+## Planning and fresh-session handoff
+
+`/plan <task>` ports the OpenCode planner into a prompt template. It investigates
+real call paths and maintains root `PLAN.md` with requirements, current state,
+decisions, concrete implementation steps, findings, and confirmed validation
+commands. It ends at `Ready for implementation` or `Blocked`, without implementing.
+The template does not change the selected model; choose Astra at medium through
+Pi's model picker when wanted.
+
+Optionally run `/plan-review-adversarial [plan-path] [feedback-output-path]`.
+Defaults are `PLAN.md` and `PLAN-REVIEW.md`. The lazily loaded review skill checks
+references and failure modes and writes separate feedback without changing the
+plan. Unlike the original OpenCode skill, it uses proportional review criteria,
+not blanket bans on mocks or mandatory code-snippet lengths. Return to the
+planning session to reconcile findings before implementation.
+
+Start a fresh session in the same repository, then run `/implement-plan` (or
+`/implement-plan path/to/plan.md`). It reads the plan, checks readiness and current
+repository state, implements, verifies, and records progress in the plan. No
+previous conversation is needed. For a direct CLI kickoff:
+
+```bash
+pi -n "Implement plan" @PLAN.md "/implement-plan"
+```
+
+All three commands are instructions, not permission restrictions, separate agent
+roles, or automatic model switches. No edit-permission guard is installed.
 
 ## Two selected packages
 
@@ -52,7 +80,7 @@ recognizes Tavily token shapes and reports matches without revealing values.
 
 Herdr continues to own its generated Pi extension. Shared skills already in
 `~/.agents/skills` are discovered by Pi and are not duplicated here. Browser MCP,
-planning agents, and custom compaction settings are deliberately absent.
+agent-framework extensions, and custom compaction settings are deliberately absent.
 
 ## Permissions are not silently equivalent
 

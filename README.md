@@ -48,7 +48,7 @@ changes.
 | Zed | symlink | symlink |
 | Neovim | symlink | copy |
 | OpenCode | symlink | symlink |
-| Pi | instructions/prompts symlink; settings merge | instructions/prompts symlink; settings merge |
+| Pi | instructions/prompts/skills symlink; settings merge | instructions/prompts/skills symlink; settings merge |
 | Git | included from existing config | included from existing config |
 | Zsh, Starship, Ghostty | symlink | keep Omarchy defaults |
 
@@ -98,19 +98,27 @@ after changing OpenCode files; configuration is loaded at startup.
 
 ## Pi
 
-`pi/AGENTS.md` and `pi/prompts/review.md` are linked into `~/.pi/agent` (or
+`pi/AGENTS.md`, the review/planning/handoff templates in `pi/prompts`, and the
+`plan-review-adversarial` skill are linked into `~/.pi/agent` (or
 `PI_CODING_AGENT_DIR`). `pi/settings.json` is merged into the machine's settings
 with a backup when changes are needed; theme, packages, device identity, and
 unrelated preferences remain local. Authentication and sessions are never copied
 into this repository.
 
-The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6.1 Sol at low,
-and DeepSeek V4.1 Flash at low. DeepSeek's API identifier is `deepseek-flash`.
+The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6 Astra at
+medium, GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at low. DeepSeek's API identifier is `deepseek-flash`.
 Run `/reload` after resource changes; start a new session to apply startup model
 defaults. Existing sessions can restore their previous model.
 
 Use `/review [focus]` in a fresh session for independent adversarial review. It
 is a prompt, not an enforced read-only agent or an automatic model switch.
+
+Use `/plan <task>` to investigate and maintain root `PLAN.md`, optionally run
+`/plan-review-adversarial [plan-path] [feedback-output-path]` (defaults: `PLAN.md`
+and `PLAN-REVIEW.md`), then reconcile feedback in the planning session. Start a
+fresh Pi session in the repo and run `/implement-plan [plan-path]` to implement
+from that durable handoff. These prompts do not switch models or enforce edit
+permissions. See [the planning workflow](docs/pi.md#planning-and-fresh-session-handoff).
 
 Install Pi separately using its [installation instructions](https://pi.dev),
 then authenticate with `/login`. `--packages` installs Ponytail and
