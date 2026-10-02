@@ -4,8 +4,6 @@ Project instructions add specifics and override these preferences on conflict.
 
 ## Environment
 
-- macOS or Omarchy Linux; editors are Zed and Neovim. Preserve Omarchy's shell and terminal defaults.
-- Common stacks: Java/Spring Boot, TypeScript/Next.js/TanStack/React, Python (AI/ML/data), and Rust (TUI/ratatui).
 - Read the project's AGENTS.md and check lockfiles before choosing a package manager or build tool.
 
 ## How to work
