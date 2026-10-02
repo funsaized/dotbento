@@ -23,6 +23,7 @@ PATTERNS=(
   'ctx7sk-[a-f0-9]{8}-[a-f0-9]{4}'       # Context7 API key
   'sk-[A-Za-z0-9]{32,}'                  # OpenAI-style key
   'sk-ant-[A-Za-z0-9_-]{20,}'            # Anthropic key
+  'tvly-[A-Za-z0-9_-]{16,}'              # Tavily key
   'AKIA[0-9A-Z]{16}'                     # AWS access key id
   'xox[baprs]-[A-Za-z0-9-]{10,}'         # Slack token
   '-----BEGIN [A-Z ]*PRIVATE KEY-----'   # private key material
@@ -45,12 +46,13 @@ case "${1:-}" in
     hits=""
     while IFS= read -r f; do
       [[ -z $f ]] && continue
-      m=$(git show ":$f" 2>/dev/null | grep -nEo "$RE" | head -3)
-      [[ -n $m ]] && hits+=$'\n'"  $f: $m"
+      m=$(git show ":$f" 2>/dev/null | grep -nE "$RE" | cut -d: -f1 | head -3)
+      [[ -n $m ]] && hits+=$'\n'"  $f: matching line(s) $m (content redacted)"
     done <<< "$files"
     ;;
   *)
-    hits=$(grep -rInE "$RE" . --exclude-dir=.git --exclude-dir=node_modules 2>/dev/null)
+    # Report paths only: never echo credential-bearing content into a log.
+    hits=$(grep -rIlE "$RE" . --exclude-dir=.git --exclude-dir=node_modules 2>/dev/null)
     ;;
 esac
 

@@ -50,6 +50,27 @@ class ConfigurePiTests(unittest.TestCase):
             self.assertEqual(destination.read_text(), '{"theme":"local"}')
             self.assertEqual(list(Path(directory).iterdir()), [destination])
 
+    def test_web_defaults_preserve_private_credentials_and_nested_preferences(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "web-search.json"
+            original = {
+                "tavilyApiKey": "test-only-placeholder",
+                "provider": "exa",
+                "fetchRouting": {"providers": ["jina"], "localPreference": True},
+            }
+            destination.write_text(json.dumps(original))
+            MODULE.configure(DEFAULTS.with_name("web-search.json"), destination, "web")
+            merged = json.loads(destination.read_text())
+            self.assertEqual(merged["tavilyApiKey"], original["tavilyApiKey"])
+            self.assertEqual(merged["provider"], "tavily")
+            self.assertEqual(merged["webSearch"]["allowedProviders"], ["tavily"])
+            self.assertEqual(merged["fetchRouting"]["providers"], ["http"])
+            self.assertTrue(merged["fetchRouting"]["localPreference"])
+            self.assertEqual(destination.stat().st_mode & 0o777, 0o600)
+            backup = destination.with_name("web-search.json.bak-web")
+            self.assertEqual(backup.stat().st_mode & 0o777, 0o600)
+            self.assertEqual(json.loads(backup.read_text()), original)
+
     def test_new_settings_and_invalid_existing_file(self):
         with tempfile.TemporaryDirectory() as directory:
             destination = Path(directory) / "agent" / "settings.json"

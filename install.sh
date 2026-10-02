@@ -5,6 +5,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 PI_AGENT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 PONYTAIL_SOURCE="git:github.com/DietrichGebert/ponytail@e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
+WEB_ACCESS_SOURCE="git:github.com/nicobailon/pi-web-access@ba36f6a3fad8abad3836e3c005ef7aecf2b886d2"
 STAMP="$(date +%Y%m%d-%H%M%S)-$$"
 DRY=0
 PACKAGES=0
@@ -173,6 +174,22 @@ link pi/prompts/review.md "$PI_AGENT_DIR/prompts/review.md"
 pi_settings_args=("$REPO/pi/settings.json" "$PI_AGENT_DIR/settings.json" "$STAMP")
 (( DRY )) && pi_settings_args+=(--dry-run)
 python3 "$REPO/scripts/configure-pi.py" "${pi_settings_args[@]}"
+# Match pi-web-access's config discovery, which differs from Pi's own paths.
+if [[ -n ${PI_CODING_AGENT_DIR:-} ]]; then
+  web_search_dir="$PI_CODING_AGENT_DIR"
+elif [[ -n ${XDG_CONFIG_HOME:-} ]]; then
+  web_search_dir="$XDG_CONFIG_HOME/pi"
+  if [[ ! -f $web_search_dir/web-search.json && -f $HOME/.pi/web-search.json ]]; then
+    web_search_dir="$HOME/.pi"
+  fi
+elif [[ ! -f $PI_AGENT_DIR/web-search.json && -f $HOME/.pi/web-search.json ]]; then
+  web_search_dir="$HOME/.pi"
+else
+  web_search_dir="$PI_AGENT_DIR"
+fi
+web_search_args=("$REPO/pi/web-search.json" "$web_search_dir/web-search.json" "$STAMP")
+(( DRY )) && web_search_args+=(--dry-run)
+python3 "$REPO/scripts/configure-pi.py" "${web_search_args[@]}"
 
 if [[ $PLATFORM == macos ]]; then
   link zsh/.zshrc "$HOME/.zshrc"
@@ -197,11 +214,13 @@ fi
 
 if (( PACKAGES )); then
   if (( DRY )); then
-    printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE"
+    printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE" "$WEB_ACCESS_SOURCE"
   elif command -v pi >/dev/null; then
     pi install "$PONYTAIL_SOURCE"
+    pi install "$WEB_ACCESS_SOURCE"
   else
     warn "Pi is not installed; install it separately, then run: pi install $PONYTAIL_SOURCE"
+    warn "For web access, run: pi install $WEB_ACCESS_SOURCE"
   fi
   if [[ $PLATFORM == macos ]]; then
     formulas=(starship eza bat fd ripgrep fzf zoxide lazygit direnv jq neovim lua-language-server stylua shfmt zsh-autosuggestions zsh-syntax-highlighting opencode)

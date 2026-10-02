@@ -113,16 +113,43 @@ Use `/review [focus]` in a fresh session for independent adversarial review. It
 is a prompt, not an enforced read-only agent or an automatic model switch.
 
 Install Pi separately using its [installation instructions](https://pi.dev),
-then authenticate with `/login`. `--packages` installs Ponytail when `pi` is on
-PATH, pinned to the reviewed 4.10.0 release commit. For a Pi-only install:
+then authenticate with `/login`. `--packages` installs Ponytail and
+pi-web-access when `pi` is on PATH, pinned to reviewed commits. Ponytail is
+version 4.10.0. For a Pi-only package install:
 
 ```bash
 pi install git:github.com/DietrichGebert/ponytail@e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156
+pi install git:github.com/nicobailon/pi-web-access@ba36f6a3fad8abad3836e3c005ef7aecf2b886d2
 ```
 
 Ponytail starts in its own default mode (`full` unless configured otherwise).
 Use `/ponytail status` to inspect it or `/ponytail off` to disable it for a
 session. Herdr's Pi integration remains managed by Herdr, not Dotbento.
+
+### Web access and Tavily credentials
+
+`pi/web-search.json` contains **no key**. The installer merges it into a private
+machine-local file, not a symlink. Search is restricted to Tavily; page fetching
+uses direct HTTP, with browser cookies and hosted extraction fallbacks disabled.
+Curator UI, summary generation by default, source-check tooling, and video
+features are disabled to keep the initial setup small.
+
+pi-web-access chooses its config path differently from Pi itself:
+
+1. `$PI_CODING_AGENT_DIR/web-search.json` when that variable is set.
+2. With `XDG_CONFIG_HOME`, `$XDG_CONFIG_HOME/pi/web-search.json`, unless only the
+   legacy `~/.pi/web-search.json` already exists.
+3. Otherwise `~/.pi/agent/web-search.json`, with the same legacy-file fallback.
+
+Supply `TAVILY_API_KEY` through a private shell/secret-manager setup, or set
+`tavilyApiKey` **only in the machine-local config**. That field also supports an
+environment reference such as `${TAVILY_API_KEY}` or a trusted `!command` secret
+resolver. Never put the actual key in `pi/web-search.json`, shell commands saved
+in history, or repository files. Installation preserves local credentials;
+config and backup files are restricted to mode `0600`.
+
+Run `/reload` after installation or config changes. A Tavily search will fail
+until a key is available; it will not silently switch to another search provider.
 
 ## macOS shell
 

@@ -1,0 +1,23 @@
+{
+  "provider": "tavily",
+  "webSearch": {
+    "allowedProviders": ["tavily"]
+  },
+  "workflow": "none",
+  "autoOpenBrowser": false,
+  "allowBrowserCookies": false,
+  "fetchRouting": {
+    "providers": ["http"],
+    "allowRemoteHostedProviders": false
+  },
+  "tools": {
+    "sourceCheck": { "enabled": false }
+  },
+  "commands": {
+    "websearch": { "enabled": false },
+    "curator": { "enabled": false },
+    "google-account": { "enabled": false }
+  },
+  "youtube": { "enabled": false },
+  "video": { "enabled": false }
+}

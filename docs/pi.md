@@ -28,12 +28,27 @@ permissions. A fresh session avoids exposing the reviewer to the implementation
 discussion. Independent review automation can be added later if the manual
 workflow becomes a bottleneck.
 
-## One selected package
+## Two selected packages
 
 Ponytail is installed through Pi's native package manager, pinned to the reviewed
 4.10.0 release commit. It contributes a Pi extension and lazily loaded skills;
 it is not a port of the OpenCode plugin. Package installation remains opt-in
-through `--packages`, or the explicit command in the root README.
+through `--packages`, or the explicit commands in the root README.
+
+pi-web-access adds search, page fetching, and retrieval of stored results. Search
+is explicitly limited to Tavily, rather than inheriting the package's broad
+fallback chain. The default workflow returns results without a generated summary
+or curator browser. Source-check tooling, curator commands, browser cookies,
+YouTube, and local-video features are initially disabled. Page extraction uses
+direct HTTP only, without handing URLs to hosted extraction services.
+
+`pi/web-search.json` holds credential-free defaults. The installer follows the
+extension's XDG/agent-directory discovery and merges those defaults into a real
+machine-local file with private permissions. Credentials come from the local
+`tavilyApiKey` field, its secret-source reference, or `TAVILY_API_KEY`; they are
+never added to tracked defaults. Existing credentials survive reinstallation,
+and private backups remain outside the repository. The repository scanner also
+recognizes Tavily token shapes and reports matches without revealing values.
 
 Herdr continues to own its generated Pi extension. Shared skills already in
 `~/.agents/skills` are discovered by Pi and are not duplicated here. Browser MCP,
