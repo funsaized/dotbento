@@ -56,7 +56,7 @@ pi -n "Implement plan" @PLAN.md "/implement-plan"
 All three commands are instructions, not permission restrictions, separate agent
 roles, or automatic model switches. No edit-permission guard is installed.
 
-## Two selected packages
+## Three selected packages
 
 Ponytail is installed through Pi's native package manager, pinned to the reviewed
 4.10.0 release commit. It contributes a Pi extension and lazily loaded skills;
@@ -69,6 +69,11 @@ fallback chain. The default workflow returns results without a generated summary
 or curator browser. Source-check tooling, curator commands, browser cookies,
 YouTube, and local-video features are initially disabled. Page extraction uses
 direct HTTP only, without handing URLs to hosted extraction services.
+
+Pi Atelier 0.13.0 adds a model/status rail and live activity sidebar, opened with
+`/atelier` or F6. Dotbento installs the pinned npm release through `--packages`;
+its user configuration stays in Atelier's own `pi-atelier.json` file rather than
+being merged into Pi's general settings. Its defaults remain package-owned.
 
 `pi/web-search.json` holds credential-free defaults. The installer follows the
 extension's XDG/agent-directory discovery and merges those defaults into a real

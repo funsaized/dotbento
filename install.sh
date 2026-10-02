@@ -6,6 +6,7 @@ CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 PI_AGENT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 PONYTAIL_SOURCE="git:github.com/DietrichGebert/ponytail@e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
 WEB_ACCESS_SOURCE="git:github.com/nicobailon/pi-web-access@ba36f6a3fad8abad3836e3c005ef7aecf2b886d2"
+ATELIER_SOURCE="npm:pi-atelier@0.13.0"
 STAMP="$(date +%Y%m%d-%H%M%S)-$$"
 DRY=0
 PACKAGES=0
@@ -218,13 +219,15 @@ fi
 
 if (( PACKAGES )); then
   if (( DRY )); then
-    printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE" "$WEB_ACCESS_SOURCE"
+    printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE" "$WEB_ACCESS_SOURCE" "$ATELIER_SOURCE"
   elif command -v pi >/dev/null; then
     pi install "$PONYTAIL_SOURCE"
     pi install "$WEB_ACCESS_SOURCE"
+    pi install "$ATELIER_SOURCE"
   else
     warn "Pi is not installed; install it separately, then run: pi install $PONYTAIL_SOURCE"
     warn "For web access, run: pi install $WEB_ACCESS_SOURCE"
+    warn "For Pi Atelier, run: pi install $ATELIER_SOURCE"
   fi
   if [[ $PLATFORM == macos ]]; then
     formulas=(starship eza bat fd ripgrep fzf zoxide lazygit direnv jq neovim lua-language-server stylua shfmt zsh-autosuggestions zsh-syntax-highlighting opencode)

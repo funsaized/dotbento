@@ -122,17 +122,20 @@ permissions. See [the planning workflow](docs/pi.md#planning-and-fresh-session-h
 
 Install Pi separately using its [installation instructions](https://pi.dev),
 then authenticate with `/login`. `--packages` installs Ponytail and
-pi-web-access when `pi` is on PATH, pinned to reviewed commits. Ponytail is
-version 4.10.0. For a Pi-only package install:
+pi-web-access from reviewed commits, plus Pi Atelier 0.13.0, when `pi` is on
+PATH. Ponytail is version 4.10.0. For a Pi-only package install:
 
 ```bash
 pi install git:github.com/DietrichGebert/ponytail@e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156
 pi install git:github.com/nicobailon/pi-web-access@ba36f6a3fad8abad3836e3c005ef7aecf2b886d2
+pi install npm:pi-atelier@0.13.0
 ```
 
 Ponytail starts in its own default mode (`full` unless configured otherwise).
 Use `/ponytail status` to inspect it or `/ponytail off` to disable it for a
-session. Herdr's Pi integration remains managed by Herdr, not Dotbento.
+session. Pi Atelier adds a status rail and live sidebar (`/atelier` or F6); its
+preferences remain in the local `pi-atelier.json`. Herdr's Pi integration
+remains managed by Herdr, not Dotbento.
 
 ### Web access and Tavily credentials
 
