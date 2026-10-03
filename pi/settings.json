@@ -1,4 +1,5 @@
 {
+  "defaultTools": ["+codemode"],
   "defaultProvider": "openai",
   "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "xhigh",

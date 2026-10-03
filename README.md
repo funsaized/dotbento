@@ -101,9 +101,9 @@ after changing OpenCode files; configuration is loaded at startup.
 `pi/AGENTS.md`, the review/planning/handoff templates in `pi/prompts`, and the
 `plan-review-adversarial` skill are linked into `~/.pi/agent` (or
 `PI_CODING_AGENT_DIR`). `pi/settings.json` is merged into the machine's settings
-with a backup when changes are needed; theme, packages, device identity, and
-unrelated preferences remain local. Authentication and sessions are never copied
-into this repository.
+with a backup when changes are needed; it enables codemode by default while
+preserving the machine's theme, packages, device identity, and unrelated
+preferences. Authentication and sessions are never copied into this repository.
 
 The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6 Astra at
 medium, GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at xhigh. DeepSeek's API

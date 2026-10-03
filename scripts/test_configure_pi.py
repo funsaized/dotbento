@@ -32,6 +32,7 @@ class ConfigurePiTests(unittest.TestCase):
             for key in ("theme", "deviceId", "packages"):
                 self.assertEqual(merged[key], original[key])
             self.assertEqual(merged["defaultProvider"], "openai")
+            self.assertEqual(merged["defaultTools"], ["+codemode"])
             self.assertEqual(merged["modelThinkingLevels"]["anthropic/local"], "high")
             self.assertEqual(merged["modelThinkingLevels"]["openai/gpt-6.1-sol"], "low")
             self.assertEqual(merged["modelThinkingLevels"]["openai/gpt-6-astra"], "medium")
