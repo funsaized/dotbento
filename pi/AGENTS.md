@@ -48,3 +48,11 @@ Project instructions add specifics and override these preferences on conflict.
 - Lead with the outcome, then relevant details. No preamble or restating the request.
 - Name consequential judgment calls so they can be overridden.
 - Be concise; report changed files, verification, and unresolved issues when finishing implementation.
+
+## Web research
+
+- Prefer repository source, installed dependency types/source, and project docs before web search.
+- Use web search when behavior depends on current or version-specific external information, when an unfamiliar API cannot be resolved locally, or when the user explicitly asks for research/current information.
+- Prefer official/version-matched documentation over blogs or summaries.
+- Be proactive about researching current, version-appropriate conventions and recommended approaches when the user's query or repository does not clearly establish them. Prefer official documentation and primary sources, and verify unfamiliar APIs rather than guessing.
+- Do not search the web for facts that can be determined reliably from the repository.
