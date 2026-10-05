@@ -56,3 +56,7 @@ Project instructions add specifics and override these preferences on conflict.
 - Prefer official/version-matched documentation over blogs or summaries.
 - Be proactive about researching current, version-appropriate conventions and recommended approaches when the user's query or repository does not clearly establish them. Prefer official documentation and primary sources, and verify unfamiliar APIs rather than guessing.
 - Do not search the web for facts that can be determined reliably from the repository.
+
+## pinata subagents
+
+- For pinata jobs, use `models` and `fallbacks` from ~/Projects/dotbento/pi/pinata/models.json as the job's `config`, unless I name other models.
