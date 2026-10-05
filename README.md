@@ -98,9 +98,10 @@ after changing OpenCode files; configuration is loaded at startup.
 
 ## Pi
 
-`pi/AGENTS.md`, the review/planning/handoff templates in `pi/prompts`, and the
-`plan-review-adversarial` skill are linked into `~/.pi/agent` (or
-`PI_CODING_AGENT_DIR`). `pi/settings.json` is merged into the machine's settings
+`pi/AGENTS.md`, the review/planning/handoff templates in `pi/prompts`, the
+`plan-review-adversarial` skill, and `pi/pinata.json` (per-role models for
+[pinata](https://github.com/funsaized/pinata) subagents) are linked into
+`~/.pi/agent` (or `PI_CODING_AGENT_DIR`). `pi/settings.json` is merged into the machine's settings
 with a backup when changes are needed; it enables codemode by default while
 preserving the machine's theme, packages, device identity, and unrelated
 preferences. Authentication and sessions are never copied into this repository.

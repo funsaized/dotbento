@@ -176,6 +176,7 @@ link pi/prompts/plan.md "$PI_AGENT_DIR/prompts/plan.md"
 link pi/prompts/implement-plan.md "$PI_AGENT_DIR/prompts/implement-plan.md"
 link pi/prompts/plan-review-adversarial.md "$PI_AGENT_DIR/prompts/plan-review-adversarial.md"
 link pi/skills/plan-review-adversarial "$PI_AGENT_DIR/skills/plan-review-adversarial"
+link pi/pinata.json "$PI_AGENT_DIR/pinata.json"
 pi_settings_args=("$REPO/pi/settings.json" "$PI_AGENT_DIR/settings.json" "$STAMP")
 (( DRY )) && pi_settings_args+=(--dry-run)
 python3 "$REPO/scripts/configure-pi.py" "${pi_settings_args[@]}"
