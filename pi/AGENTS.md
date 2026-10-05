@@ -59,4 +59,7 @@ Project instructions add specifics and override these preferences on conflict.
 
 ## pinata subagents
 
-- For pinata jobs, use `models` and `fallbacks` from ~/Projects/dotbento/pi/pinata/models.json as the job's `config`, unless I name other models.
+- For pinata jobs, first look for `.pi/pinata.json` at the project root. If it exists, use it as the job's `config`; it may set `models`, `fallbacks`, `setup`, `codemode`, `limits`, and `passEnv`. Show me any `setup` command it contains before starting the run.
+- If the project has no `.pi/pinata.json`, use `models` and `fallbacks` from ~/Projects/dotbento/pi/pinata/models.json.
+- Models I name in a request override both.
+- To give a project its own config, copy ~/Projects/dotbento/pi/pinata/models.json to `.pi/pinata.json` in that project and edit it.
