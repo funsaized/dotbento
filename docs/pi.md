@@ -8,7 +8,7 @@ system prompt remains intact.
 ## Model selection is explicit
 
 The scoped cycle contains GPT-6 Luna at xhigh, GPT-6 Astra at medium,
-GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at xhigh. Luna is the startup
+GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at max. Luna is the startup
 default. DeepSeek's direct API calls V4.1 Flash `deepseek-flash`; there is no
 custom provider or model alias file.
 Thinking levels are set both per model and in cycle entries so a model change
@@ -19,6 +19,30 @@ itself, and machine-specific theme, identity, packages, and unrelated model
 preferences must remain local. `scripts/configure-pi.py` backs up changed settings
 and preserves unrelated keys, including unrelated per-model thinking levels.
 Re-running installation reapplies the tracked model defaults and scope.
+
+## Context management
+
+Pi 1.1.0 supports per-model compaction budgets. Automatic compaction stays
+enabled, with a fallback reserve of 32,768 tokens and 32,000 recent tokens kept
+without summarization. The selected models override those budgets:
+
+| Models | Pi catalog context window | Reserved tokens | Compaction above | Recent tokens kept |
+|---|---:|---:|---:|---:|
+| GPT-6 Luna, Astra, and GPT-6.1 Sol | 272,000 | 72,000 | 200,000 | 32,000 |
+| DeepSeek V4.1 Flash | 1,000,000 | 600,000 | 400,000 | 48,000 |
+
+These are starting points for coding sessions, not model capability limits.
+Pi triggers compaction when context exceeds the catalog window minus the reserve;
+recalculate reserves if catalog windows change. The retained-token budget does
+not include every component of the resulting context, such as the summary.
+`reserveTokens` also influences summarization output limits, capped by the model's
+maximum output tokens. Monitor DeepSeek summary usage in particular because its
+large reserve permits a large output budget.
+
+Cache-miss notices are enabled to make cache behavior and compaction usage visible.
+Cache warming, retries, and model context metadata retain Pi's defaults. Use the
+existing `PLAN.md` handoff workflow to preserve decisions and unfinished work
+across compaction or fresh sessions.
 
 ## Review is a prompt, not an agent framework
 
@@ -85,8 +109,8 @@ and private backups remain outside the repository. The repository scanner also
 recognizes Tavily token shapes and reports matches without revealing values.
 
 Herdr continues to own its generated Pi extension. Shared skills already in
-`~/.agents/skills` are discovered by Pi and are not duplicated here. Browser MCP,
-agent-framework extensions, and custom compaction settings are deliberately absent.
+`~/.agents/skills` are discovered by Pi and are not duplicated here. Browser MCP
+and agent-framework extensions are deliberately absent from package installation.
 
 ## Permissions are not silently equivalent
 

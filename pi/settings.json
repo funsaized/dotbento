@@ -7,12 +7,33 @@
     "openai/gpt-6-luna": "xhigh",
     "openai/gpt-6-astra": "medium",
     "openai/gpt-6.1-sol": "low",
-    "deepseek/deepseek-flash": "xhigh"
+    "deepseek/deepseek-flash": "max"
   },
   "enabledModels": [
     "openai/gpt-6-luna:xhigh",
     "openai/gpt-6-astra:medium",
     "openai/gpt-6.1-sol:low",
-    "deepseek/deepseek-flash:xhigh"
-  ]
+    "deepseek/deepseek-flash:max"
+  ],
+  "showCacheMissNotices": true,
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 32768,
+    "keepRecentTokens": 32000,
+    "modelOverrides": {
+      "openai/gpt-6-luna": {
+        "reserveTokens": 72000
+      },
+      "openai/gpt-6-astra": {
+        "reserveTokens": 72000
+      },
+      "openai/gpt-6.1-sol": {
+        "reserveTokens": 72000
+      },
+      "deepseek/deepseek-flash": {
+        "reserveTokens": 600000,
+        "keepRecentTokens": 48000
+      }
+    }
+  }
 }
