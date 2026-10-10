@@ -11,13 +11,15 @@ STAMP="$(date +%Y%m%d-%H%M%S)-$$"
 DRY=0
 PACKAGES=0
 YES=0
+ONLY=all
 
 usage() {
   cat <<'EOF'
-Usage: ./install.sh [--dry-run] [--packages] [--yes]
+Usage: ./install.sh [--dry-run] [--packages] [--yes] [--only=nvim,pi,ghostty]
 
   --dry-run   Show changes without applying them
   --packages  Also install supported development tools
+  --only=...  Configure only selected components: nvim, pi, ghostty
   --yes       Approve changes without an interactive prompt
 EOF
 }
@@ -27,10 +29,23 @@ for arg in "$@"; do
     --dry-run) DRY=1 ;;
     --packages) PACKAGES=1 ;;
     --yes) YES=1 ;;
+    --only=*) ONLY=${arg#*=} ;;
     -h|--help) usage; exit 0 ;;
     *) printf 'unknown flag: %s\n' "$arg" >&2; exit 2 ;;
   esac
 done
+
+if [[ $ONLY != all ]]; then
+  [[ -n $ONLY && $ONLY != ,* && $ONLY != *, && $ONLY != *,,* ]] || { echo "Empty component in --only" >&2; exit 2; }
+  IFS=',' read -r -a components <<< "$ONLY"
+  for component in "${components[@]}"; do
+    case "$component" in
+      nvim|pi|ghostty) ;;
+      *) printf 'unknown component: %s\n' "$component" >&2; exit 2 ;;
+    esac
+  done
+fi
+selected() { [[ $ONLY == all || ,$ONLY, == *,$1,* ]]; }
 
 case "$(uname -s)" in
   Darwin) PLATFORM=macos ;;
@@ -52,8 +67,12 @@ if (( PACKAGES )) && [[ $PLATFORM == macos ]] && ! command -v brew >/dev/null; t
   exit 1
 fi
 
-printf 'Dotbento plan for %s (%s): Zed, Neovim, OpenCode, Pi, Git' "$PLATFORM" "$CONFIG_HOME"
-[[ $PLATFORM == macos ]] && printf ', Zsh, Starship, Ghostty'
+if [[ $ONLY == all ]]; then
+  printf 'Dotbento plan for %s (%s): Zed, Neovim, OpenCode, Pi, Git' "$PLATFORM" "$CONFIG_HOME"
+  [[ $PLATFORM == macos ]] && printf ', Zsh, Starship, Ghostty'
+else
+  printf 'Dotbento plan for %s (%s): %s' "$PLATFORM" "$CONFIG_HOME" "$ONLY"
+fi
 (( PACKAGES )) && printf '; install requested packages'
 printf '\nExisting files will be backed up before replacement.\n'
 
@@ -156,98 +175,120 @@ install_git() {
   fi
 }
 
-install_git
-link zed/settings.json "$CONFIG_HOME/zed/settings.json"
-opencode_json="$CONFIG_HOME/opencode/opencode.json"
-if [[ -e $opencode_json || -L $opencode_json ]]; then
-  if (( DRY )); then
-    printf '  would back up conflicting %s\n' "$opencode_json"
-  else
-    mv "$opencode_json" "$opencode_json.bak-$STAMP"
-    warn "backed up conflicting $opencode_json"
-  fi
-fi
-link opencode/opencode.jsonc "$CONFIG_HOME/opencode/opencode.jsonc"
-link opencode/AGENTS.md "$CONFIG_HOME/opencode/AGENTS.md"
-link opencode/plan-agent.md "$CONFIG_HOME/opencode/plan-agent.md"
-link pi/AGENTS.md "$PI_AGENT_DIR/AGENTS.md"
-link pi/prompts/review.md "$PI_AGENT_DIR/prompts/review.md"
-link pi/prompts/plan.md "$PI_AGENT_DIR/prompts/plan.md"
-link pi/prompts/implement-plan.md "$PI_AGENT_DIR/prompts/implement-plan.md"
-link pi/prompts/plan-review-adversarial.md "$PI_AGENT_DIR/prompts/plan-review-adversarial.md"
-link pi/skills/plan-review-adversarial "$PI_AGENT_DIR/skills/plan-review-adversarial"
-link pi/pinata.json "$PI_AGENT_DIR/pinata.json"
-pi_settings_args=("$REPO/pi/settings.json" "$PI_AGENT_DIR/settings.json" "$STAMP")
-(( DRY )) && pi_settings_args+=(--dry-run)
-python3 "$REPO/scripts/configure-pi.py" "${pi_settings_args[@]}"
-# Match pi-web-access's config discovery, which differs from Pi's own paths.
-if [[ -n ${PI_CODING_AGENT_DIR:-} ]]; then
-  web_search_dir="$PI_CODING_AGENT_DIR"
-elif [[ -n ${XDG_CONFIG_HOME:-} ]]; then
-  web_search_dir="$XDG_CONFIG_HOME/pi"
-  if [[ ! -f $web_search_dir/web-search.json && -f $HOME/.pi/web-search.json ]]; then
-    web_search_dir="$HOME/.pi"
-  fi
-elif [[ ! -f $PI_AGENT_DIR/web-search.json && -f $HOME/.pi/web-search.json ]]; then
-  web_search_dir="$HOME/.pi"
-else
-  web_search_dir="$PI_AGENT_DIR"
-fi
-web_search_args=("$REPO/pi/web-search.json" "$web_search_dir/web-search.json" "$STAMP")
-(( DRY )) && web_search_args+=(--dry-run)
-python3 "$REPO/scripts/configure-pi.py" "${web_search_args[@]}"
-
-if [[ $PLATFORM == macos ]]; then
-  link zsh/.zshrc "$HOME/.zshrc"
-  link starship/starship.toml "$CONFIG_HOME/starship.toml"
-  link ghostty/config "$CONFIG_HOME/ghostty/config"
-
-  ghostty_app="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
-  if [[ -e $ghostty_app && ! -L $ghostty_app ]]; then
+if [[ $ONLY == all ]]; then
+  install_git
+  link zed/settings.json "$CONFIG_HOME/zed/settings.json"
+  opencode_json="$CONFIG_HOME/opencode/opencode.json"
+  if [[ -e $opencode_json || -L $opencode_json ]]; then
     if (( DRY )); then
-      printf '  would neutralize %s\n' "$ghostty_app"
+      printf '  would back up conflicting %s\n' "$opencode_json"
     else
-      mv "$ghostty_app" "$ghostty_app.bak-$STAMP"
-      printf '# Real config: %s/ghostty/config\n' "$CONFIG_HOME" > "$ghostty_app"
-      warn "neutralized Ghostty's secondary config"
+      mv "$opencode_json" "$opencode_json.bak-$STAMP"
+      warn "backed up conflicting $opencode_json"
     fi
   fi
+  link opencode/opencode.jsonc "$CONFIG_HOME/opencode/opencode.jsonc"
+  link opencode/AGENTS.md "$CONFIG_HOME/opencode/AGENTS.md"
+  link opencode/plan-agent.md "$CONFIG_HOME/opencode/plan-agent.md"
+fi
+if selected pi; then
+  link pi/AGENTS.md "$PI_AGENT_DIR/AGENTS.md"
+  link pi/prompts/review.md "$PI_AGENT_DIR/prompts/review.md"
+  link pi/prompts/plan.md "$PI_AGENT_DIR/prompts/plan.md"
+  link pi/prompts/implement-plan.md "$PI_AGENT_DIR/prompts/implement-plan.md"
+  link pi/prompts/plan-review-adversarial.md "$PI_AGENT_DIR/prompts/plan-review-adversarial.md"
+  link pi/skills/plan-review-adversarial "$PI_AGENT_DIR/skills/plan-review-adversarial"
+  link pi/pinata.json "$PI_AGENT_DIR/pinata.json"
+  pi_settings_args=("$REPO/pi/settings.json" "$PI_AGENT_DIR/settings.json" "$STAMP")
+  (( DRY )) && pi_settings_args+=(--dry-run)
+  python3 "$REPO/scripts/configure-pi.py" "${pi_settings_args[@]}"
+  # Match pi-web-access's config discovery, which differs from Pi's own paths.
+  if [[ -n ${PI_CODING_AGENT_DIR:-} ]]; then
+    web_search_dir="$PI_CODING_AGENT_DIR"
+  elif [[ -n ${XDG_CONFIG_HOME:-} ]]; then
+    web_search_dir="$XDG_CONFIG_HOME/pi"
+    if [[ ! -f $web_search_dir/web-search.json && -f $HOME/.pi/web-search.json ]]; then
+      web_search_dir="$HOME/.pi"
+    fi
+  elif [[ ! -f $PI_AGENT_DIR/web-search.json && -f $HOME/.pi/web-search.json ]]; then
+    web_search_dir="$HOME/.pi"
+  else
+    web_search_dir="$PI_AGENT_DIR"
+  fi
+  web_search_args=("$REPO/pi/web-search.json" "$web_search_dir/web-search.json" "$STAMP")
+  (( DRY )) && web_search_args+=(--dry-run)
+  python3 "$REPO/scripts/configure-pi.py" "${web_search_args[@]}"
 
-  link nvim "$CONFIG_HOME/nvim"
+fi
+if [[ $PLATFORM == macos ]]; then
+  if [[ $ONLY == all ]]; then
+    link zsh/.zshrc "$HOME/.zshrc"
+    link starship/starship.toml "$CONFIG_HOME/starship.toml"
+  fi
+  if selected ghostty; then
+    link ghostty/config "$CONFIG_HOME/ghostty/config"
+
+    ghostty_app="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+    if [[ -e $ghostty_app && ! -L $ghostty_app ]]; then
+      if (( DRY )); then
+        printf '  would neutralize %s\n' "$ghostty_app"
+      else
+        mv "$ghostty_app" "$ghostty_app.bak-$STAMP"
+        printf '# Real config: %s/ghostty/config\n' "$CONFIG_HOME" > "$ghostty_app"
+        warn "neutralized Ghostty's secondary config"
+      fi
+    fi
+
+  fi
+  if selected nvim; then link nvim "$CONFIG_HOME/nvim"; fi
 else
-  copy_tree nvim "$CONFIG_HOME/nvim"
+  if selected nvim; then copy_tree nvim "$CONFIG_HOME/nvim"; fi
 fi
 
 if (( PACKAGES )); then
-  if (( DRY )); then
-    printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE" "$WEB_ACCESS_SOURCE" "$ATELIER_SOURCE"
-  elif command -v pi >/dev/null; then
-    pi install "$PONYTAIL_SOURCE"
-    pi install "$WEB_ACCESS_SOURCE"
-    pi install "$ATELIER_SOURCE"
-  else
-    warn "Pi is not installed; install it separately, then run: pi install $PONYTAIL_SOURCE"
-    warn "For web access, run: pi install $WEB_ACCESS_SOURCE"
-    warn "For Pi Atelier, run: pi install $ATELIER_SOURCE"
+  if selected pi; then
+    if (( DRY )); then
+      printf '  would run (if Pi is installed): pi install %s\n' "$PONYTAIL_SOURCE" "$WEB_ACCESS_SOURCE" "$ATELIER_SOURCE"
+    elif command -v pi >/dev/null; then
+      pi install "$PONYTAIL_SOURCE"
+      pi install "$WEB_ACCESS_SOURCE"
+      pi install "$ATELIER_SOURCE"
+    else
+      warn "Pi is not installed; install it separately, then run: pi install $PONYTAIL_SOURCE"
+      warn "For web access, run: pi install $WEB_ACCESS_SOURCE"
+      warn "For Pi Atelier, run: pi install $ATELIER_SOURCE"
+    fi
   fi
   if [[ $PLATFORM == macos ]]; then
     formulas=(starship eza bat fd ripgrep fzf zoxide lazygit direnv jq neovim lua-language-server stylua shfmt zsh-autosuggestions zsh-syntax-highlighting opencode)
     casks=(ghostty zed font-meslo-lg-nerd-font)
+    if [[ $ONLY != all ]]; then
+      formulas=()
+      casks=()
+      if selected nvim; then formulas+=(neovim lua-language-server stylua shfmt ripgrep fd); fi
+      if selected pi; then formulas+=(node); fi
+      if selected ghostty; then casks+=(ghostty font-meslo-lg-nerd-font); fi
+    fi
     if (( DRY )); then
       printf '  would run: brew install %s\n' "${formulas[*]}"
       printf '  would run: brew install --cask %s\n' "${casks[*]}"
     else
-      brew install "${formulas[@]}"
-      brew install --cask "${casks[@]}"
+      if (( ${#formulas[@]} )); then brew install "${formulas[@]}"; fi
+      if (( ${#casks[@]} )); then brew install --cask "${casks[@]}"; fi
     fi
   else
     packages=(neovim lua-language-server stylua shfmt zed opencode)
+    if [[ $ONLY != all ]]; then
+      packages=()
+      if selected nvim; then packages+=(neovim lua-language-server stylua shfmt); fi
+      if selected pi; then packages+=(nodejs npm); fi
+    fi
     if (( DRY )); then
       printf '  would run: omarchy pkg add %s\n' "${packages[*]}"
     else
-      omarchy pkg add "${packages[@]}"
+      if (( ${#packages[@]} )); then omarchy pkg add "${packages[@]}"; fi
     fi
   fi
 fi
 
-echo "Done. Restart OpenCode after configuration changes; reload Pi resources and start a new Pi session for model defaults."
+echo "Done. Restart configured applications; start a new Pi session for model defaults."

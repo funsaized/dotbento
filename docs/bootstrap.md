@@ -36,6 +36,17 @@ destinations and package commands without changing anything.
 
 `--yes` is treated as explicit approval for automation. It is not the default.
 
+To apply only Neovim, Pi, and Ghostty on a Mac without configuring other apps:
+
+```bash
+./install.sh --only=nvim,pi,ghostty --dry-run
+./install.sh --only=nvim,pi,ghostty --yes
+```
+
+`--only` accepts any comma-separated combination of `nvim`, `pi`, and `ghostty`.
+With `--packages`, it also limits package installation to those components.
+Pi itself must be installed separately before its extension packages can be installed.
+
 ## XDG paths before hardcoded home paths
 
 Most destinations are rooted at:
