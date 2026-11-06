@@ -151,8 +151,8 @@ Copies take two paths when possible:
 Pastes prefer `wl-paste` or `pbpaste`. Without a local display clipboard, they
 fall back to an OSC 52 query.
 
-This dual path preserves both directions of work. A remote yank reaches the
-laptop, while text copied from a browser remains pasteable inside Neovim.
+This dual path preserves both directions of work. An explicit clipboard copy can reach the
+laptop when forwarding is enabled; ordinary yanks depend on `clipboard`.
 
 Linux and macOS use different process APIs when detecting a herdr ancestor.
 Linux reads `/proc`; macOS queries `ps`. That small runtime branch avoids a
@@ -183,3 +183,89 @@ matching `lazy-lock.json` entry.
 - [Bootstrap ownership](bootstrap.md#why-neovim-is-copied-on-omarchy)
 - [Visual system](visual-system.md)
 - [Ghostty clipboard policy](ghostty.md#clipboard-and-selection)
+
+## Working alongside Pi
+
+Space is `<leader>`. These keys were checked against installed LazyVim commit
+`999700997f72227187d49d8b92667183dc7fc809`, matching our lockfile:
+
+| Key | Action |
+| --- | --- |
+| Space `gd` | Snacks Git diff picker (hunks) |
+| Space `ghp` | Preview hunk inline (Gitsigns, after attaching to a file) |
+| Space `ghs` | Stage hunk; Visual mode stages the selected range |
+| Space `gg` / `gG` | LazyGit at Git root / current directory |
+| Space `ft` / `fT` | Terminal at detected project root / current directory |
+| Ctrl-/ | Focus root terminal; terminal-local mapping hides it |
+| Esc Esc | Leave terminal input mode |
+| Space `yp` | Copy current file path and cursor line to clipboard |
+| Visual, Space `ys` | Copy selected buffer text as a fenced Markdown snippet |
+
+LazyGit mappings are absent when `lazygit` is missing at startup. Install it
+separately and restart, or use `git diff`, `git add -p`, and `git commit` in a
+terminal. No existing review mappings were changed. The new keys have descriptive
+which-key labels and no matching keys in the local config or pinned defaults.
+
+Practice this loop:
+
+1. Save the relevant buffers with `:w`. Check `:pwd` and the file you are editing.
+2. Open Space `ft`. Run `pwd`, `git rev-parse --show-toplevel`, and
+   `git status --short --branch`. LazyVim's project root may come from an LSP;
+   verify the actual worktree before starting `pi`. Use Space `fT` after
+   `:cd /your/worktree` when you want an explicit directory. Verify reused
+   terminals too: their shell may have changed directory.
+3. Give Pi a bounded task. Avoid editing the same files concurrently.
+4. Return to Neovim, run `:checktime`, then Space `gd` and Space `ghp` to review.
+   In a multi-repository session, confirm the picker's directory; use a terminal
+   in the verified worktree for `git diff` if uncertain.
+5. Run the project's documented checks in that terminal. Stage selected hunks
+   with Space `ghs` or `git add -p`; inspect `git diff --cached` before committing.
+
+If an agent changes a file with unsaved editor changes, do not blindly write or
+use `:edit!`. Preserve your buffer with `:write /tmp/my-buffer-backup`, compare
+it against disk, then reconcile deliberately. `:edit!` discards buffer edits;
+use it only after preserving or intentionally abandoning them. LazyVim runs
+`checktime` on FocusGained, TermClose, and TermLeave. Those events are not a lock,
+merge mechanism, or protection against every concurrent edit.
+
+### Copying context
+
+Space `yp` produces `src/app.ts#L42`. Visual Space `ys` adds that location above
+a Markdown fence, lengthened when the selection contains backticks. Character,
+line, and block selections use Neovim's selection extraction, including the
+`selection` option. Neither helper saves, moves the cursor, yanks into numbered
+registers, or sends anything to Pi. The clipboard register is intentionally
+replaced. Paste into your agent only when ready.
+
+Paths are resolved from the file, not the editor directory. Symlinks identify
+their physical target; nested repositories and worktrees use their own Git root.
+The notification identifies that root. Outside Git or without Git, the fallback
+is an absolute path; unnamed buffers use `[unnamed buffer]`. New files use their
+resolved parent directory. Modified buffers copy current buffer text and line
+numbers, which may differ from disk; the notification explicitly says so.
+
+Both helpers write `+` explicitly. Locally this uses Neovim's existing provider
+(`pbcopy` on macOS, normally `wl-copy` on Omarchy). Under SSH/tmux/Herdr the
+custom provider also emits OSC 52 unless disabled. Ordinary yanks need not reach
+that provider: LazyVim leaves `clipboard` empty under `SSH_CONNECTION`.
+Forwarding depends on terminal and multiplexer support and policy.
+
+On each machine, run `:checkhealth vim.provider`, try `:let @+ = 'clipboard test'`,
+and paste into another application. Check `:let @* = 'primary test'` separately
+(on Wayland this is the primary selection). Repeat through SSH, tmux, and Herdr;
+OSC 52 paste queries may be unsupported even when copying works.
+
+### Apply and verify
+
+No installer or live configuration changes are required for repository tests:
+
+```bash
+nvim -i NONE --headless -u NONE -l tests/agent_context.lua
+```
+
+On macOS an existing Dotbento symlink picks up these edits on restart. On Omarchy,
+review `./install.sh --dry-run --only=nvim`, then run `./install.sh --only=nvim`
+when ready to replace the installed copy. Restart Neovim. Check `:verbose nmap
+<Space>yp` and `:verbose xmap <Space>ys`, then practice both helpers and paste into
+another app. Local clipboard and remote forwarding require this machine-level
+check; a headless mocked provider cannot prove delivery to your desktop.
