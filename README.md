@@ -63,6 +63,7 @@ this opinionated setup. macOS uses a symlink so edits remain visible to Git.
 The LazyVim setup matches the plugins enabled on the reference Omarchy machine:
 
 - Neo-tree, Snacks explorer, dial, and inc-rename
+- Smear cursor animation (`:SmearCursorToggle` to toggle)
 - JSON and SchemaStore support
 - Markdown rendering and preview
 - TypeScript with vtsls (types and navigation)
