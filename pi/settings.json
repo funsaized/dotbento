@@ -5,14 +5,14 @@
   "defaultThinkingLevel": "xhigh",
   "modelThinkingLevels": {
     "openai/gpt-6-luna": "xhigh",
-    "openai/gpt-6-astra": "medium",
-    "openai/gpt-6.1-sol": "low",
+    "openai/gpt-6.2-astra": "medium",
+    "openai/gpt-6.2-sol": "low",
     "deepseek/deepseek-flash": "max"
   },
   "enabledModels": [
     "openai/gpt-6-luna:xhigh",
-    "openai/gpt-6-astra:medium",
-    "openai/gpt-6.1-sol:low",
+    "openai/gpt-6.2-astra:medium",
+    "openai/gpt-6.2-sol:low",
     "deepseek/deepseek-flash:max"
   ],
   "showCacheMissNotices": true,
@@ -24,10 +24,10 @@
       "openai/gpt-6-luna": {
         "reserveTokens": 72000
       },
-      "openai/gpt-6-astra": {
+      "openai/gpt-6.2-astra": {
         "reserveTokens": 72000
       },
-      "openai/gpt-6.1-sol": {
+      "openai/gpt-6.2-sol": {
         "reserveTokens": 72000
       },
       "deepseek/deepseek-flash": {

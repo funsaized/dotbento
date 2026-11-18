@@ -2,10 +2,10 @@
   "models": {
     "default": { "provider": "openai", "id": "gpt-6-luna", "thinking": "xhigh" },
     "scout": { "provider": "openai", "id": "gpt-6-luna", "thinking": "medium" },
-    "research": { "provider": "openai", "id": "gpt-6.1-sol", "thinking": "medium" },
-    "planner": { "provider": "openai", "id": "gpt-6-astra", "thinking": "high" },
+    "research": { "provider": "openai", "id": "gpt-6.2-sol", "thinking": "medium" },
+    "planner": { "provider": "openai", "id": "gpt-6.2-astra", "thinking": "high" },
     "builder": { "provider": "openai", "id": "gpt-6-luna", "thinking": "xhigh" },
-    "reviewer": { "provider": "openai", "id": "gpt-6-astra", "thinking": "medium" }
+    "reviewer": { "provider": "openai", "id": "gpt-6.2-astra", "thinking": "medium" }
   },
   "fallbacks": {
     "builder": [{ "provider": "deepseek", "id": "deepseek-flash", "thinking": "max" }]

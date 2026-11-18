@@ -107,11 +107,11 @@ with a backup when changes are needed; it enables codemode by default while
 preserving the machine's theme, packages, device identity, and unrelated
 preferences. Authentication and sessions are never copied into this repository.
 
-The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6 Astra at
-medium, GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at max. DeepSeek's API
+The model cycle contains OpenAI GPT-6 Luna at xhigh (default), GPT-6.2 Astra at
+medium, GPT-6.2 Sol at low, and DeepSeek V4.1 Flash at max. DeepSeek's API
 identifier is `deepseek-flash`.
-Per-model compaction budgets target 200k context tokens for the OpenAI models
-and 400k for DeepSeek with the current Pi catalog limits. Cache-miss notices are
+Per-model compaction reserves are 72k tokens for the OpenAI models and 600k
+for DeepSeek; the compaction threshold depends on each model’s catalog window. Cache-miss notices are
 enabled. See [context management](docs/pi.md#context-management) for the retained
 history budgets and catalog assumptions.
 Run `/reload` after resource changes; start a new session to apply startup model

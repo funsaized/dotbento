@@ -7,8 +7,8 @@ system prompt remains intact.
 
 ## Model selection is explicit
 
-The scoped cycle contains GPT-6 Luna at xhigh, GPT-6 Astra at medium,
-GPT-6.1 Sol at low, and DeepSeek V4.1 Flash at max. Luna is the startup
+The scoped cycle contains GPT-6 Luna at xhigh, GPT-6.2 Astra at medium,
+GPT-6.2 Sol at low, and DeepSeek V4.1 Flash at max. Luna is the startup
 default. DeepSeek's direct API calls V4.1 Flash `deepseek-flash`; there is no
 custom provider or model alias file.
 Thinking levels are set both per model and in cycle entries so a model change
@@ -28,7 +28,8 @@ without summarization. The selected models override those budgets:
 
 | Models | Pi catalog context window | Reserved tokens | Compaction above | Recent tokens kept |
 |---|---:|---:|---:|---:|
-| GPT-6 Luna, Astra, and GPT-6.1 Sol | 272,000 | 72,000 | 200,000 | 32,000 |
+| GPT-6 Luna | 272,000 | 72,000 | 200,000 | 32,000 |
+| GPT-6.2 Astra and Sol | Check Pi catalog | 72,000 | Catalog window minus 72,000 | 32,000 |
 | DeepSeek V4.1 Flash | 1,000,000 | 600,000 | 400,000 | 48,000 |
 
 These are starting points for coding sessions, not model capability limits.
