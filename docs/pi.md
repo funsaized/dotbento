@@ -7,10 +7,12 @@ system prompt remains intact.
 
 ## Model selection is explicit
 
-The scoped cycle contains GPT-6 Luna at xhigh, GPT-6.2 Astra at medium,
-GPT-6.2 Sol at low, and DeepSeek V4.1 Flash at max. Luna is the startup
-default. DeepSeek's direct API calls V4.1 Flash `deepseek-flash`; there is no
-custom provider or model alias file.
+The scoped cycle contains GPT-6 Luna in Fast and regular variants at xhigh,
+GPT-6.2 Astra at medium, GPT-6.2 Sol at low, and DeepSeek V4.1 Flash at max.
+The Fast variant is the startup default. The alias in `pi/models.json` sends
+`gpt-6-luna` to OpenAI with `service_tier: "fast"`. The installer merges it
+into the local model list by ID. DeepSeek's direct API calls V4.1 Flash
+`deepseek-flash`.
 Thinking levels are set both per model and in cycle entries so a model change
 does not accidentally carry Luna's xhigh setting into lighter work.
 

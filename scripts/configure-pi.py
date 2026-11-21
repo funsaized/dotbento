@@ -8,11 +8,17 @@ import shutil
 from pathlib import Path
 
 
-def merge_defaults(current: dict, defaults: dict) -> dict:
+def merge_defaults(current: dict, defaults: dict, *, merge_models: bool = False) -> dict:
     merged = dict(current)
     for key, value in defaults.items():
         if isinstance(value, dict) and isinstance(current.get(key), dict):
-            merged[key] = merge_defaults(current[key], value)
+            merged[key] = merge_defaults(current[key], value, merge_models=merge_models)
+        elif merge_models and key == "models" and isinstance(value, list) and isinstance(current.get(key), list):
+            models = {model["id"]: model for model in current[key]}
+            for model in value:
+                model_id = model["id"]
+                models[model_id] = merge_defaults(models.get(model_id, {}), model)
+            merged[key] = list(models.values())
         else:
             merged[key] = value
     return merged
@@ -23,7 +29,7 @@ def configure(source: Path, destination: Path, stamp: str, dry_run: bool = False
     current = json.loads(destination.read_text()) if destination.exists() else {}
     if not isinstance(defaults, dict) or not isinstance(current, dict):
         raise ValueError("Pi settings must be JSON objects")
-    merged = merge_defaults(current, defaults)
+    merged = merge_defaults(current, defaults, merge_models=source.name == "models.json")
     if merged == current:
         if not dry_run:
             destination.chmod(0o600)
