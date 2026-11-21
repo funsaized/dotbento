@@ -39,12 +39,7 @@ class ConfigurePiTests(unittest.TestCase):
             self.assertEqual(merged["modelThinkingLevels"]["deepseek/deepseek-flash"], "max")
             self.assertIn("openai/gpt-6.2-astra:medium", merged["enabledModels"])
             self.assertIn("deepseek/deepseek-flash:max", merged["enabledModels"])
-            self.assertEqual(merged["defaultModel"], "gpt-6-luna-fast")
-            self.assertEqual(merged["enabledModels"][:2], [
-                "openai/gpt-6-luna-fast:xhigh",
-                "openai/gpt-6-luna:xhigh",
-            ])
-            self.assertEqual(len(merged["enabledModels"]), 5)
+            self.assertEqual(len(merged["enabledModels"]), 4)
             backup = destination.with_name("settings.json.bak-first")
             self.assertEqual(json.loads(backup.read_text()), original)
             MODULE.configure(DEFAULTS, destination, "second")
@@ -59,25 +54,6 @@ class ConfigurePiTests(unittest.TestCase):
             MODULE.configure(DEFAULTS, destination, "dry", True)
             self.assertEqual(destination.read_text(), '{"theme":"local"}')
             self.assertEqual(list(Path(directory).iterdir()), [destination])
-
-    def test_model_merge_preserves_local_models_without_duplicating_the_alias(self):
-        with tempfile.TemporaryDirectory() as directory:
-            destination = Path(directory) / "models.json"
-            local_model = {"id": "local-model", "name": "Local Model"}
-            overrides = {"gpt-6-luna": {"contextWindow": 1050000}}
-            destination.write_text(json.dumps({
-                "providers": {"openai": {"models": [local_model], "modelOverrides": overrides}},
-            }))
-            source = DEFAULTS.with_name("models.json")
-            MODULE.configure(source, destination, "first")
-            MODULE.configure(source, destination, "second")
-            provider = json.loads(destination.read_text())["providers"]["openai"]
-            self.assertEqual(provider["modelOverrides"], overrides)
-            self.assertEqual(provider["models"][0], local_model)
-            self.assertEqual([model["id"] for model in provider["models"]], [
-                "local-model", "gpt-6-luna-fast",
-            ])
-            self.assertFalse(destination.with_name("models.json.bak-second").exists())
 
     def test_web_defaults_preserve_private_credentials_and_nested_preferences(self):
         with tempfile.TemporaryDirectory() as directory:

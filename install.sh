@@ -199,9 +199,6 @@ if selected pi; then
   link pi/prompts/plan-review-adversarial.md "$PI_AGENT_DIR/prompts/plan-review-adversarial.md"
   link pi/skills/plan-review-adversarial "$PI_AGENT_DIR/skills/plan-review-adversarial"
   link pi/pinata.json "$PI_AGENT_DIR/pinata.json"
-  pi_models_args=("$REPO/pi/models.json" "$PI_AGENT_DIR/models.json" "$STAMP")
-  (( DRY )) && pi_models_args+=(--dry-run)
-  python3 "$REPO/scripts/configure-pi.py" "${pi_models_args[@]}"
   pi_settings_args=("$REPO/pi/settings.json" "$PI_AGENT_DIR/settings.json" "$STAMP")
   (( DRY )) && pi_settings_args+=(--dry-run)
   python3 "$REPO/scripts/configure-pi.py" "${pi_settings_args[@]}"
