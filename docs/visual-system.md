@@ -53,9 +53,8 @@ Neovim follows a different rule:
 
 This avoids maintaining a second Omarchy theme mapping in Dotbento.
 
-Zed remains pinned to Catppuccin Mocha on Omarchy. It does not follow the
-desktop theme, so the Linux profile favors a stable graphical editor over exact
-theme parity with Neovim.
+On Omarchy, Zed keeps the locally selected theme, including Omazed's
+generated theme. Catppuccin Mocha is the default for a fresh installation.
 
 ## Some colors are indirect, others are explicit
 
@@ -68,8 +67,8 @@ to the pinned macOS terminal theme.
 
 ## Cursor and focus are shared signals
 
-Ghostty and Zed both use a blinking underline cursor. Inactive panes dim rather
-than gaining heavier borders or decorations.
+Ghostty and Zed use a blinking underline cursor for text entry. Zed uses
+a block cursor in Vim Normal and Visual modes. Inactive panes dim.
 
 Ghostty provides the actual translucent surface. Neovim clears selected
 background highlight groups so terminal opacity remains visible. Zed applies

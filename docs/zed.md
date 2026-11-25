@@ -1,104 +1,55 @@
-# Why Zed is configured as the graphical editor
+# Zed
 
-Zed is the graphical counterpart to Neovim. It shares the visual language but
-keeps editor-specific behavior where that produces a better workflow.
+Zed starts in Vim Normal mode with relative line numbers, smart-case search,
+system clipboard integration, and a which-key menu for pending shortcuts.
+Space is the LazyVim leader.
 
-## The settings file is safe to link
+| Keys | Action |
+|---|---|
+| `Space Space`, `Space f f` | Find files |
+| `Space /`, `Space s g` | Project search |
+| `Space e`, `Space ,`, `Space b d` | File tree, tab picker, close tab |
+| `[b` / `]b`, `Shift+H` / `Shift+L` | Previous / next tab |
+| `Ctrl+h/j/l`, `Ctrl+w k` | Focus the pane left, down, right, or up |
+| `gd`, `gr`, `K` | Definition, references, hover |
+| `Space c a`, `Space c r`, `Space c f` | Code actions, rename, format |
+| `[d` / `]d`, `Space s d` | Navigate diagnostics, open project diagnostics |
+| `Space g s`, `[h` / `]h` | Git panel, previous / next hunk |
+| `Space f t`, `Esc Esc` in the terminal | Toggle the terminal, toggle terminal Vi navigation |
+| `Space m p`, `Space y p` | Open Markdown preview, copy file location |
+| `Space j` | Jump to a visible word using Zed's labeled motion |
 
-The tracked settings contain no API tokens. Context servers that require keys
-are not configured in this repository.
+`Ctrl+K` remains a prefix for the Agent Panel and terminal shortcuts. Follow
+it with `a` to focus the agent, `t` for the terminal, `c` for the context
+menu, `s` to add a selection to the thread, or `n` for a new thread.
+`Alt+Shift+F` also runs the formatter.
 
-This allows `settings.json` to remain symlinked on both platforms. Changes are
-visible to Git immediately, while credentials stay in tool-specific storage or
-machine-local configuration.
+## Formatting and language servers
 
-## Formatting has one owner per language
+Autosave runs on focus change. Formatting and safe Oxlint fixes run on an
+explicit format command. Projects can opt into formatting on save in
+`.zed/settings.json`.
 
-Prettier is disabled globally. JavaScript, JSX, TypeScript, TSX, JSON, and JSONC
-use oxfmt. The four JavaScript and TypeScript scopes also run safe oxlint fixes.
+Zed installs the Oxc extension and selects its named Oxfmt server for JS, TS,
+JSON, and JSONC. For JS and TS, vtsls provides language intelligence and
+Oxlint provides diagnostics and safe fixes. CSS, SCSS, HTML, and Markdown
+use the `prettier` executable on Zed's project PATH. Projects can override
+the formatter in their Zed settings.
 
-Biome and ESLint language servers are disabled for the JavaScript and TypeScript
-scopes. JSON and JSONC disable Biome. Running multiple formatters or fix
-providers produces duplicated diagnostics and competing edits. The
-configuration chooses one path instead.
+Java discovers its JDK from the machine or project settings. In projects that
+use Maven Spotless, define a project task for the module's `spotless:apply`
+goal so the build controls the format. The Java language server remains
+available for navigation and diagnostics.
 
-CSS, SCSS, HTML, and Markdown delegate to their language server. Dotbento does
-not install another formatter solely to cover those file types.
+## Installing
 
-Format-on-save remains enabled in Zed. This differs from Neovim's explicit
-format command (`<leader>cf`, with oxfmt from the Oxc extra). Zed is used as
-the opinionated project editor, while Neovim is also used to inspect
-unfamiliar trees from the terminal.
+Run `./install.sh --only=zed` to merge the tracked settings and keybindings
+into the local Zed config. Existing settings outside the managed keys,
+including MCP credentials, SSH connections, Java paths, and the selected
+theme, stay in the local file. Omazed can continue to generate its theme on
+Omarchy. A fresh install uses Catppuccin Mocha. Operator Mono Lig requires a
+local font installation.
 
-## Java follows the machine
-
-The jdtls configuration controls source downloads and decompiled-source
-behavior, but does not name a JDK path.
-
-Hardcoded Homebrew cellar versions and user-specific SDKMAN paths fail as soon
-as a JDK updates or the config moves to another platform. Zed instead discovers
-Java through the environment it launches with.
-
-The shell remains responsible for selecting a JDK through Homebrew, SDKMAN, or
-project-local tooling.
-
-Java layout is the same ownership rule as Neovim: the module's Spotless
-(Palantir) configuration is the formatter when the POM has
-`spotless-maven-plugin`. Zed does not pin Palantir itself. Neovim runs that
-goal through Conform (`lua/plugins/java-spotless.lua`); in Zed, format-on-save
-still uses the language server unless the project is formatted by Maven.
-
-## Theme and typography mirror the terminal
-
-The dark theme is Catppuccin Mocha, matching the managed Ghostty profile on
-macOS. Zed keeps this theme on Omarchy even when Neovim follows the desktop
-theme. The editor and embedded terminal use Operator Mono Lig at size 16.
-Syntax overrides apply italic to the same broad semantic categories used by
-Neovim.
-
-The UI font remains Zed's own sans-serif face. Matching code typography matters
-more than forcing one font into every piece of application chrome.
-
-## Interaction settings reduce persistent noise
-
-Inlay hints are disabled until requested. Inactive panes dim. Autosave occurs on
-focus change. Search uses smart case. Wrap guides expose common 80, 100, and 120
-column conventions without enforcing one globally.
-
-Inline blame waits before appearing and starts at a minimum column. This keeps
-Git context available without placing it beside every short line immediately.
-
-## The embedded terminal is not Ghostty
-
-Zed's terminal follows the system shell and starts in the current project. It
-shares the font, size, underline cursor, and blinking behavior used by Ghostty.
-
-It does not inherit every Ghostty keyboard decision. In particular,
-`option_as_meta` remains disabled. Dotbento accepts that boundary rather than
-pretending embedded and standalone terminals are identical.
-
-## Agent support is separate from OpenCode policy
-
-Zed registers several agent servers, including OpenCode. Its editor-facing
-model and inline-assistant choices optimize for two different latency profiles.
-
-The global OpenCode roles, permissions, and instructions still live under
-`opencode/`. Registering an agent server in Zed does not duplicate that policy.
-
-## Portability limits
-
-Operator Mono is commercial and may be absent. Zed needs a local font override
-on machines without it. SSH connection definitions and MCP credentials are also
-machine-local by design.
-
-## Verification
-
-Use **Zed: Open Default Settings** to compare tracked values against the version
-installed on the machine. Confirm that oxfmt and oxlint are active in a project
-that provides them.
-
-## Related
-
-- [Visual system](visual-system.md)
-- [OpenCode agent design](opencode.md)
-- [Neovim formatting tradeoff](neovim.md#formatting-remains-an-explicit-action)
+On a changed install, Dotbento saves private, timestamped backups of existing
+files and writes JSON that Zed can read. The backups retain any JSONC comments.
+Use `./install.sh --dry-run --only=zed` to preview the operation.

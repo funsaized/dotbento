@@ -15,11 +15,11 @@ ONLY=all
 
 usage() {
   cat <<'EOF'
-Usage: ./install.sh [--dry-run] [--packages] [--yes] [--only=nvim,pi,ghostty]
+Usage: ./install.sh [--dry-run] [--packages] [--yes] [--only=nvim,pi,ghostty,zed]
 
   --dry-run   Show changes without applying them
   --packages  Also install supported development tools
-  --only=...  Configure only selected components: nvim, pi, ghostty
+  --only=...  Configure only selected components: nvim, pi, ghostty, zed
   --yes       Approve changes without an interactive prompt
 EOF
 }
@@ -40,7 +40,7 @@ if [[ $ONLY != all ]]; then
   IFS=',' read -r -a components <<< "$ONLY"
   for component in "${components[@]}"; do
     case "$component" in
-      nvim|pi|ghostty) ;;
+      nvim|pi|ghostty|zed) ;;
       *) printf 'unknown component: %s\n' "$component" >&2; exit 2 ;;
     esac
   done
@@ -60,7 +60,7 @@ case "$(uname -s)" in
 esac
 
 command -v git >/dev/null || { echo "Git is required to install shared Git settings." >&2; exit 1; }
-command -v python3 >/dev/null || { echo "Python 3 is required to merge Pi settings." >&2; exit 1; }
+command -v python3 >/dev/null || { echo "Python 3 is required to merge Zed and Pi settings." >&2; exit 1; }
 
 if (( PACKAGES )) && [[ $PLATFORM == macos ]] && ! command -v brew >/dev/null; then
   echo "Homebrew is required: https://brew.sh" >&2
@@ -175,9 +175,14 @@ install_git() {
   fi
 }
 
+if selected zed; then
+  zed_args=("$REPO/zed" "$CONFIG_HOME/zed" "$STAMP")
+  (( DRY )) && zed_args+=(--dry-run)
+  python3 "$REPO/scripts/configure-zed.py" "${zed_args[@]}"
+fi
+
 if [[ $ONLY == all ]]; then
   install_git
-  link zed/settings.json "$CONFIG_HOME/zed/settings.json"
   opencode_json="$CONFIG_HOME/opencode/opencode.json"
   if [[ -e $opencode_json || -L $opencode_json ]]; then
     if (( DRY )); then
@@ -268,6 +273,7 @@ if (( PACKAGES )); then
       if selected nvim; then formulas+=(neovim lua-language-server stylua shfmt ripgrep fd); fi
       if selected pi; then formulas+=(node); fi
       if selected ghostty; then casks+=(ghostty font-meslo-lg-nerd-font); fi
+      if selected zed; then casks+=(zed); fi
     fi
     if (( DRY )); then
       printf '  would run: brew install %s\n' "${formulas[*]}"
@@ -282,6 +288,7 @@ if (( PACKAGES )); then
       packages=()
       if selected nvim; then packages+=(neovim lua-language-server stylua shfmt); fi
       if selected pi; then packages+=(nodejs npm); fi
+      if selected zed; then packages+=(zed); fi
     fi
     if (( DRY )); then
       printf '  would run: omarchy pkg add %s\n' "${packages[*]}"

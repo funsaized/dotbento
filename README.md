@@ -45,7 +45,7 @@ changes.
 
 | Config | macOS | Omarchy Linux |
 |---|---:|---:|
-| Zed | symlink | symlink |
+| Zed | settings and keymap merge | settings and keymap merge |
 | Neovim | symlink | copy |
 | OpenCode | symlink | symlink |
 | Pi | instructions/prompts/skills symlink; settings merge | instructions/prompts/skills symlink; settings merge |
@@ -82,12 +82,13 @@ Omarchy and `pbcopy`/`pbpaste` integration on macOS.
 
 ## Zed
 
-Zed uses oxfmt and oxlint for JavaScript, TypeScript, JSON, and JSONC. Other
-languages use their language server formatter. Prettier is disabled, and Java
-is discovered from the machine rather than a versioned Homebrew or SDKMAN path.
+Zed uses Vim mode with LazyVim's Space leader. Use `<leader>cf` or
+`Alt+Shift+F` to format. JS and TS use vtsls, Oxlint, and Oxfmt, and JSON
+and JSONC use Oxfmt.
 
-The tracked settings contain no API keys, so they can remain symlinked. Configure
-MCP servers and credentials outside this repository.
+Run `./install.sh --only=zed` to merge the shared settings and keybindings.
+Keep MCP credentials, SSH connections, and local Java paths in your Zed
+settings. See [the Zed guide](docs/zed.md) for keybindings and formatter setup.
 
 ## OpenCode
 

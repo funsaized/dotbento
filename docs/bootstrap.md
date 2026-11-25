@@ -70,13 +70,12 @@ settings.json.bak-20260912-153000-12345
 The process ID supplements the timestamp so two runs in one second do not
 collide. Existing symlinks are removed because the target remains elsewhere.
 
-The installer never merges arbitrary application settings. Merging creates
-unclear ownership and is difficult to undo. A complete backup gives the user a
-simple recovery path.
+Zed and Pi merge shared preferences into the existing config files. The
+installer saves the original files alongside the merged copies for recovery.
 
 ## Why most configs are symlinked
 
-Zed, OpenCode, and the macOS configurations are symlinked. Editing the live
+OpenCode and the macOS shell and terminal configurations are symlinked. Editing the live
 file then edits the repository, so `git diff` reveals drift immediately.
 
 The linker is idempotent. A destination already pointing at the expected source

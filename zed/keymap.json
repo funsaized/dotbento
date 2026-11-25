@@ -1,0 +1,115 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-k a": "agent::ToggleFocus",
+      "ctrl-k t": "terminal_panel::Toggle",
+      "ctrl-k c": "agent::OpenAddContextMenu",
+      "ctrl-k s": "agent::AddSelectionToThread",
+      "ctrl-k n": "agent::NewThread"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-shift-f": "editor::Format"
+    }
+  },
+  {
+    "context": "Pane || Terminal",
+    "bindings": {
+      "ctrl-k t": "terminal_panel::Toggle"
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp",
+      "ctrl-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "Editor && mode == full && (vim_mode == normal || vim_mode == visual) && !menu",
+    "bindings": {
+      "space /": "project_search::ToggleFocus",
+      "space s g": "project_search::ToggleFocus",
+      "space c a": "editor::ToggleCodeActions",
+      "space c f": "editor::Format",
+      "space c r": "editor::Rename",
+      "space u w": "editor::ToggleSoftWrap"
+    }
+  },
+  {
+    "context": "Editor && mode == full && vim_mode == normal && !menu",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+      "[ b": "pane::ActivatePreviousItem",
+      "] b": "pane::ActivateNextItem",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "] d": "editor::GoToDiagnostic",
+      "[ h": "editor::GoToPreviousHunk",
+      "] h": "editor::GoToHunk",
+      "g d": "editor::GoToDefinition",
+      "g r": "editor::FindAllReferences",
+      "g i": "editor::GoToImplementation",
+      "shift-k": "editor::Hover",
+      "space j": "vim::HelixJumpToWord",
+      "space space": "file_finder::Toggle",
+      "space f f": "file_finder::Toggle",
+      "space e": "project_panel::ToggleFocus",
+      "space ,": "tab_switcher::Toggle",
+      "space f b": "tab_switcher::Toggle",
+      "space f n": "workspace::NewFile",
+      "space f p": "projects::OpenRecent",
+      "space b b": "pane::AlternateFile",
+      "space b d": [
+        "pane::CloseActiveItem",
+        {
+          "close_pinned": false
+        }
+      ],
+      "space s d": "diagnostics::Deploy",
+      "space s s": "outline::Toggle",
+      "space shift-s s": "project_symbols::Toggle",
+      "space g s": "git_panel::ToggleFocus",
+      "space g d": "git::OpenModifiedFiles",
+      "space g b": "git::Blame",
+      "space f t": "terminal_panel::ToggleFocus",
+      "space y p": "editor::CopyFileLocation",
+      "space u h": "editor::ToggleInlayHints",
+      "space u shift-l": "editor::ToggleRelativeLineNumbers",
+      "space w v": "pane::SplitRight",
+      "space w s": "pane::SplitDown",
+      "space w m": "workspace::ToggleZoom",
+      "space d b": "editor::ToggleBreakpoint",
+      "space d u": "debug_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "Editor && mode == full && extension == md && vim_mode == normal && !menu",
+    "bindings": {
+      "space m p": "markdown::OpenPreviewToTheSide"
+    }
+  },
+  {
+    "context": "EmptyPane",
+    "bindings": {
+      "space space": "file_finder::Toggle",
+      "space f f": "file_finder::Toggle",
+      "space e": "project_panel::ToggleFocus",
+      "space f n": "workspace::NewFile",
+      "space f t": "terminal_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "Terminal && !menu",
+    "bindings": {
+      "escape escape": "terminal::ToggleViMode"
+    }
+  }
+]
