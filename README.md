@@ -17,7 +17,7 @@ each supported tool:
 - [bootstrap](docs/bootstrap.md) and [Git ownership](docs/git.md)
 - [Ghostty](docs/ghostty.md), [Zsh](docs/zsh.md), and
   [Starship](docs/starship.md)
-- [Neovim](docs/neovim.md), [Zed](docs/zed.md), and
+- [Neovim](docs/neovim.md), [Zed](docs/zed.md), [VS Code](docs/vscode.md),
   [OpenCode](docs/opencode.md) and [Pi](docs/pi.md)
 - the shared [visual system](docs/visual-system.md)
 
@@ -89,6 +89,19 @@ and JSONC use Oxfmt.
 Run `./install.sh --only=zed` to merge the shared settings and keybindings.
 Keep MCP credentials, SSH connections, and local Java paths in your Zed
 settings. See [the Zed guide](docs/zed.md) for keybindings and formatter setup.
+
+## VS Code
+
+The optional Dotbento profile carries over Zed's Vim shortcuts, Which Key
+menu, Catppuccin theme, and explicit Oxc formatting workflow.
+
+```bash
+python3 vscode/export-profile.py > /tmp/Dotbento.code-profile
+```
+
+In VS Code, open **File → Preferences → Profiles**, choose **Import Profile**
+from the **New Profile** menu, and select the generated file. See the
+[VS Code guide](docs/vscode.md) for shortcuts and formatter setup.
 
 ## OpenCode
 

@@ -1,0 +1,89 @@
+[
+  {
+    "key": "space",
+    "command": "whichkey.show",
+    "when": "editorTextFocus && vim.active && vim.mode =~ /^(Normal|Visual|VisualLine|VisualBlock)$/ && !suggestWidgetVisible && !whichkeyVisible"
+  },
+  {
+    "key": "space",
+    "command": "whichkey.show",
+    "when": "activeEditorGroupEmpty && !inputFocus && !listFocus && !terminalFocus && !sideBarFocus && !auxiliaryBarFocus && !panelFocus && !whichkeyVisible"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "workbench.action.toggleAuxiliaryBar",
+    "when": "!terminalFocus && !inQuickOpen && !whichkeyVisible && (!inputFocus || editorTextFocus)"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "editorTextFocus && vim.mode == 'Normal' && !whichkeyVisible"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "editorTextFocus && vim.mode == 'Normal' && !whichkeyVisible"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "editorTextFocus && vim.mode == 'Normal' && !whichkeyVisible"
+  },
+  {
+    "key": "ctrl+w k",
+    "command": "workbench.action.navigateUp",
+    "when": "editorTextFocus && vim.mode == 'Normal' && !whichkeyVisible"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "sideBarFocus && !inputFocus && !whichkeyVisible"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "auxiliaryBarFocus && !inputFocus && !whichkeyVisible"
+  },
+  {
+    "key": "alt+shift+f",
+    "command": "editor.action.formatDocument",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+j",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+k",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+k a",
+    "command": "workbench.action.chat.open"
+  },
+  {
+    "key": "ctrl+k a",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "chatInputHasFocus || inChatInput || inChat"
+  },
+  {
+    "key": "ctrl+k t",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "ctrl+k c",
+    "command": "workbench.action.chat.attachContext",
+    "when": "inChatInput"
+  },
+  {
+    "key": "ctrl+k s",
+    "command": "workbench.action.chat.attachSelection",
+    "when": "editorTextFocus && editorHasSelection"
+  },
+  {
+    "key": "ctrl+k n",
+    "command": "workbench.action.chat.newChat"
+  }
+]

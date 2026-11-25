@@ -1,0 +1,218 @@
+{
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-latte",
+  "workbench.sideBar.location": "right",
+  "workbench.panel.defaultLocation": "bottom",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.tabActionLocation": "left",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.list.smoothScrolling": true,
+  "explorer.compactFolders": false,
+  "workbench.tree.indent": 12,
+  "window.restoreWindows": "all",
+  "window.openFoldersInNewWindow": "off",
+  "editor.fontFamily": "'Operator Mono Lig', 'JetBrains Mono', monospace",
+  "editor.fontSize": 16,
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 24,
+  "editor.cursorBlinking": "blink",
+  "editor.cursorStyle": "underline",
+  "editor.lineNumbers": "relative",
+  "editor.rulers": [80, 100, 120],
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.linkedEditing": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.indentation": true,
+  "editor.stickyScroll.enabled": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.semanticTokenColorCustomizations": {
+    "rules": {
+      "comment": { "italic": true },
+      "keyword": { "italic": true },
+      "type": { "italic": true },
+      "parameter": { "italic": true }
+    }
+  },
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.codeActionsOnSave": { "source.fixAll.oxc": "never" },
+  "search.smartCase": true,
+  "search.seedOnFocus": true,
+  "search.seedWithNearestWord": true,
+  "search.mode": "newEditor",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/vendor": true,
+    "**/dist": true,
+    "**/out": true,
+    "**/.next": true,
+    "**/.nuxt": true,
+    "**/.output": true,
+    "**/target": true,
+    "**/.cache": true,
+    "**/.turbo": true,
+    "**/.parcel-cache": true,
+    "**/.webpack-cache": true,
+    "**/coverage": true,
+    "**/.nyc_output": true,
+    "**/test-results": true,
+    "**/*.min.js": true,
+    "**/*.min.css": true,
+    "**/bundle.js": true,
+    "**/*.map": true,
+    "**/.env.local": true,
+    "**/.env.*.local": true,
+    "**/*.log": true,
+    "**/.idea": true,
+    "**/*.swp": true,
+    "**/*.swo": true
+  },
+  "git.blame.editorDecoration.enabled": true,
+  "terminal.integrated.fontFamily": "'Operator Mono Lig', 'JetBrains Mono', monospace",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.cursorStyle": "underline",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.copyOnSelection": false,
+  "telemetry.telemetryLevel": "off",
+  "[javascript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[json]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+  "oxc.fixKind": "safe_fix",
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.smartcase": true,
+  "vim.hlsearch": true,
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.duration": 200,
+  "vim.cursorStylePerMode.normal": "block",
+  "vim.cursorStylePerMode.insert": "underline",
+  "vim.cursorStylePerMode.visual": "block",
+  "vim.easymotion": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["H"], "commands": ["workbench.action.previousEditorInGroup"] },
+    { "before": ["L"], "commands": ["workbench.action.nextEditorInGroup"] },
+    { "before": ["[", "b"], "commands": ["workbench.action.previousEditorInGroup"] },
+    { "before": ["]", "b"], "commands": ["workbench.action.nextEditorInGroup"] },
+    { "before": ["[", "d"], "commands": ["editor.action.marker.prev"] },
+    { "before": ["]", "d"], "commands": ["editor.action.marker.next"] },
+    { "before": ["[", "h"], "commands": ["workbench.action.editor.previousChange"] },
+    { "before": ["]", "h"], "commands": ["workbench.action.editor.nextChange"] },
+    { "before": ["[", "r"], "commands": ["editor.action.wordHighlight.prev"] },
+    { "before": ["]", "r"], "commands": ["editor.action.wordHighlight.next"] },
+    { "before": ["g", "d"], "commands": ["editor.action.revealDefinition"] },
+    { "before": ["g", "r"], "commands": ["references-view.findReferences"] },
+    { "before": ["g", "i"], "commands": ["editor.action.goToImplementation"] },
+    { "before": ["K"], "commands": ["editor.action.showHover"] }
+  ],
+  "whichkey.bindings": [
+    { "key": " ", "name": "Find files", "type": "command", "command": "workbench.action.quickOpen" },
+    { "key": "/", "name": "Project search", "type": "command", "command": "workbench.action.findInFiles" },
+    { "key": ",", "name": "Open editors", "type": "command", "command": "workbench.action.showAllEditors" },
+    { "key": "e", "name": "Focus file tree", "type": "command", "command": "workbench.files.action.focusFilesExplorer" },
+    {
+      "key": "j", "name": "Jump to a word", "type": "command", "command": "vim.remap",
+      "args": { "after": ["<leader>", "<leader>", "w"] }
+    },
+    {
+      "key": "f", "name": "+Files and terminal", "type": "bindings",
+      "bindings": [
+        { "key": "f", "name": "Find files", "type": "command", "command": "workbench.action.quickOpen" },
+        { "key": "b", "name": "Open editors", "type": "command", "command": "workbench.action.showAllEditors" },
+        { "key": "n", "name": "New file", "type": "command", "command": "workbench.action.files.newUntitledFile" },
+        { "key": "p", "name": "Recent projects", "type": "command", "command": "workbench.action.openRecent" },
+        { "key": "t", "name": "Toggle terminal", "type": "command", "command": "workbench.action.terminal.toggleTerminal" }
+      ]
+    },
+    {
+      "key": "b", "name": "+Tabs", "type": "bindings",
+      "bindings": [
+        { "key": "b", "name": "Last used tab", "type": "command", "command": "workbench.action.openPreviousRecentlyUsedEditorInGroup" },
+        { "key": "d", "name": "Close tab", "type": "command", "command": "workbench.action.closeActiveEditor" }
+      ]
+    },
+    {
+      "key": "c", "name": "+Code", "type": "bindings",
+      "bindings": [
+        { "key": "a", "name": "Code actions", "type": "command", "command": "editor.action.quickFix" },
+        { "key": "f", "name": "Format document", "type": "command", "command": "editor.action.formatDocument" },
+        { "key": "r", "name": "Rename symbol", "type": "command", "command": "editor.action.rename" },
+        {
+          "key": "x", "name": "Apply safe Oxlint fixes", "type": "command", "command": "editor.action.codeAction",
+          "args": { "kind": "source.fixAll.oxc", "apply": "first" }
+        }
+      ]
+    },
+    {
+      "key": "s", "name": "+Search and diagnostics", "type": "bindings",
+      "bindings": [
+        { "key": "g", "name": "Project search", "type": "command", "command": "workbench.action.findInFiles" },
+        { "key": "d", "name": "Problems", "type": "command", "command": "workbench.actions.view.problems" },
+        { "key": "s", "name": "Document symbols", "type": "command", "command": "workbench.action.gotoSymbol" }
+      ]
+    },
+    {
+      "key": "S", "name": "+Workspace symbols", "type": "bindings",
+      "bindings": [
+        { "key": "s", "name": "Workspace symbols", "type": "command", "command": "workbench.action.showAllSymbols" }
+      ]
+    },
+    {
+      "key": "g", "name": "+Git", "type": "bindings",
+      "bindings": [
+        { "key": "s", "name": "Source Control", "type": "command", "command": "workbench.view.scm" },
+        { "key": "d", "name": "Diff current file", "type": "command", "command": "git.openChange" },
+        { "key": "b", "name": "Toggle inline blame", "type": "command", "command": "git.blame.toggleEditorDecoration" }
+      ]
+    },
+    {
+      "key": "w", "name": "+Panes", "type": "bindings",
+      "bindings": [
+        { "key": "v", "name": "Split right", "type": "command", "command": "workbench.action.splitEditorRight" },
+        { "key": "s", "name": "Split down", "type": "command", "command": "workbench.action.splitEditorDown" },
+        { "key": "m", "name": "Maximize editor group", "type": "command", "command": "workbench.action.toggleMaximizeEditorGroup" },
+        { "key": "d", "name": "Close editor group", "type": "command", "command": "workbench.action.closeEditorsAndGroup" }
+      ]
+    },
+    {
+      "key": "u", "name": "+Editor display", "type": "bindings",
+      "bindings": [
+        { "key": "w", "name": "Toggle word wrap", "type": "command", "command": "editor.action.toggleWordWrap" }
+      ]
+    },
+    {
+      "key": "m", "name": "+Markdown", "type": "bindings",
+      "bindings": [
+        { "key": "p", "name": "Preview to the side", "type": "command", "command": "markdown.showPreviewToSide" }
+      ]
+    },
+    {
+      "key": "y", "name": "+Copy", "type": "bindings",
+      "bindings": [
+        { "key": "p", "name": "Copy relative file path", "type": "command", "command": "copyRelativeFilePath" }
+      ]
+    },
+    {
+      "key": "d", "name": "+Debug", "type": "bindings",
+      "bindings": [
+        { "key": "b", "name": "Toggle breakpoint", "type": "command", "command": "editor.debug.action.toggleBreakpoint" },
+        { "key": "u", "name": "Run and Debug", "type": "command", "command": "workbench.view.debug" }
+      ]
+    }
+  ]
+}

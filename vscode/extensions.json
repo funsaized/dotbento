@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "vscodevim.vim",
+    "vspacecode.whichkey",
+    "catppuccin.catppuccin-vsc",
+    "catppuccin.catppuccin-vsc-icons",
+    "oxc.oxc-vscode",
+    "esbenp.prettier-vscode",
+    "redhat.java"
+  ]
+}
