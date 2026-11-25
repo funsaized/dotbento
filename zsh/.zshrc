@@ -28,9 +28,6 @@ command -v pyenv >/dev/null && eval "$(pyenv init - zsh)"
 # uv / local binaries
 [[ -r "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
-# opencode
-export PATH="$HOME/.opencode/bin:$PATH"
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"

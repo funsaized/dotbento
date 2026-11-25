@@ -75,8 +75,8 @@ installer saves the original files alongside the merged copies for recovery.
 
 ## Why most configs are symlinked
 
-OpenCode and the macOS shell and terminal configurations are symlinked. Editing the live
-file then edits the repository, so `git diff` reveals drift immediately.
+The macOS shell and terminal configurations are symlinked. Changes to the
+live files appear in the repository's `git diff`.
 
 The linker is idempotent. A destination already pointing at the expected source
 is left alone.
@@ -99,23 +99,13 @@ After an Omarchy Neovim refresh, running Dotbento restores the opinionated
 configuration. This is a deliberate handoff between two owners, not an attempt
 to intercept Omarchy's update mechanism.
 
-## Why OpenCode's alternate config is backed up
-
-OpenCode recognizes both `opencode.json` and `opencode.jsonc`. Leaving both in
-the global config directory creates ambiguous merged behavior. Dotbento backs
-up an existing JSON file before linking the JSONC source of truth.
-
-Authentication is not stored in either file. OpenCode keeps credentials in its
-own store.
-
 ## Package managers follow the platform
 
 macOS uses Homebrew for command-line tools and casks. Omarchy uses
 `omarchy pkg add`, preserving the distribution's package conventions.
 
-The Omarchy package list is intentionally smaller. It installs editor tooling,
-Zed, and OpenCode, but not a duplicate shell stack. Operator Mono is not
-installed anywhere because it is commercial and optional.
+On Omarchy, the package list covers Zed and Neovim tooling. Operator Mono
+remains an optional commercial font.
 
 ## Consequence of this design
 

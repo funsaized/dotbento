@@ -1,9 +1,8 @@
 # Why Pi starts with a small configuration
 
-Pi carries the same verification, small-diff, language, and Git expectations as
-OpenCode, without importing OpenCode's named agent workforce. Global instructions
-live in `pi/AGENTS.md`; project instructions supply local requirements. Pi's own
-system prompt remains intact.
+Pi's global instructions in `pi/AGENTS.md` cover verification, keeping diffs
+small, language conventions, and Git. Project instructions supply local
+requirements.
 
 ## Model selection is explicit
 
@@ -47,7 +46,7 @@ across compaction or fresh sessions.
 
 ## Review is a prompt, not an agent framework
 
-`pi/prompts/review.md` keeps the adversarial diff review from OpenCode. It asks
+`pi/prompts/review.md` defines the adversarial diff review. It asks
 for severity-ordered findings, concrete failure scenarios, evidence, and no
 modifications. It does not spawn a child agent, select a model, or enforce tool
 permissions. A fresh session avoids exposing the reviewer to the implementation
@@ -56,7 +55,7 @@ workflow becomes a bottleneck.
 
 ## Planning and fresh-session handoff
 
-`/plan <task>` ports the OpenCode planner into a prompt template. It investigates
+`/plan <task>` starts a planning session from a prompt template. It investigates
 real call paths and maintains root `PLAN.md` with requirements, current state,
 decisions, concrete implementation steps, findings, and confirmed validation
 commands. It ends at `Ready for implementation` or `Blocked`, without implementing.
@@ -66,8 +65,7 @@ Pi's model picker when wanted.
 Optionally run `/plan-review-adversarial [plan-path] [feedback-output-path]`.
 Defaults are `PLAN.md` and `PLAN-REVIEW.md`. The lazily loaded review skill checks
 references and failure modes and writes separate feedback without changing the
-plan. Unlike the original OpenCode skill, it uses proportional review criteria,
-not blanket bans on mocks or mandatory code-snippet lengths. Return to the
+plan. Its review criteria are proportional to the change. Return to the
 planning session to reconcile findings before implementation.
 
 Start a fresh session in the same repository, then run `/implement-plan` (or
@@ -85,8 +83,8 @@ roles, or automatic model switches. No edit-permission guard is installed.
 ## Three selected packages
 
 Ponytail is installed through Pi's native package manager, pinned to the reviewed
-4.10.0 release commit. It contributes a Pi extension and lazily loaded skills;
-it is not a port of the OpenCode plugin. Package installation remains opt-in
+4.10.0 release commit. It contributes a Pi extension and lazily loaded skills.
+Package installation remains opt-in
 through `--packages`, or the explicit commands in the root README.
 
 pi-web-access adds search, page fetching, and retrieval of stored results. Search
@@ -113,10 +111,8 @@ Herdr continues to own its generated Pi extension. Shared skills already in
 `~/.agents/skills` are discovered by Pi and are not duplicated here. Browser MCP
 and agent-framework extensions are deliberately absent from package installation.
 
-## Permissions are not silently equivalent
+## Pi permissions
 
-OpenCode's approval rules and role restrictions are not imported. Global
-instructions ask for care around destructive operations and sensitive files,
-but they do not enforce approval or provide isolation. Pi and installed
-extensions run with the current user's permissions. Sensitive tasks need an
-appropriate execution boundary, not just a prompt claiming to be read-only.
+Global instructions ask for care around destructive operations and sensitive
+files. Pi and installed extensions run with the current user's permissions.
+Use an isolated environment for tasks that need enforced access restrictions.

@@ -28,8 +28,6 @@ syntax. Use the root [README](../README.md) when you need installation steps.
   visual conventions
 - [VS Code](vscode.md) covers the optional profile and its equivalents for
   Zed's shortcuts, formatting, and pane layout.
-- [OpenCode](opencode.md): agent roles, permissions, output limits, and global
-  working rules
 - [Pi](pi.md): minimal instructions, explicit model scope, review prompts, and
   machine-local settings ownership
 

@@ -68,7 +68,7 @@ if (( PACKAGES )) && [[ $PLATFORM == macos ]] && ! command -v brew >/dev/null; t
 fi
 
 if [[ $ONLY == all ]]; then
-  printf 'Dotbento plan for %s (%s): Zed, Neovim, OpenCode, Pi, Git' "$PLATFORM" "$CONFIG_HOME"
+  printf 'Dotbento plan for %s (%s): Zed, Neovim, Pi, Git' "$PLATFORM" "$CONFIG_HOME"
   [[ $PLATFORM == macos ]] && printf ', Zsh, Starship, Ghostty'
 else
   printf 'Dotbento plan for %s (%s): %s' "$PLATFORM" "$CONFIG_HOME" "$ONLY"
@@ -183,18 +183,6 @@ fi
 
 if [[ $ONLY == all ]]; then
   install_git
-  opencode_json="$CONFIG_HOME/opencode/opencode.json"
-  if [[ -e $opencode_json || -L $opencode_json ]]; then
-    if (( DRY )); then
-      printf '  would back up conflicting %s\n' "$opencode_json"
-    else
-      mv "$opencode_json" "$opencode_json.bak-$STAMP"
-      warn "backed up conflicting $opencode_json"
-    fi
-  fi
-  link opencode/opencode.jsonc "$CONFIG_HOME/opencode/opencode.jsonc"
-  link opencode/AGENTS.md "$CONFIG_HOME/opencode/AGENTS.md"
-  link opencode/plan-agent.md "$CONFIG_HOME/opencode/plan-agent.md"
 fi
 if selected pi; then
   link pi/AGENTS.md "$PI_AGENT_DIR/AGENTS.md"
@@ -265,7 +253,7 @@ if (( PACKAGES )); then
     fi
   fi
   if [[ $PLATFORM == macos ]]; then
-    formulas=(starship eza bat fd ripgrep fzf zoxide lazygit direnv jq neovim lua-language-server stylua shfmt zsh-autosuggestions zsh-syntax-highlighting opencode)
+    formulas=(starship eza bat fd ripgrep fzf zoxide lazygit direnv jq neovim lua-language-server stylua shfmt zsh-autosuggestions zsh-syntax-highlighting)
     casks=(ghostty zed font-meslo-lg-nerd-font)
     if [[ $ONLY != all ]]; then
       formulas=()
@@ -283,7 +271,7 @@ if (( PACKAGES )); then
       if (( ${#casks[@]} )); then brew install --cask "${casks[@]}"; fi
     fi
   else
-    packages=(neovim lua-language-server stylua shfmt zed opencode)
+    packages=(neovim lua-language-server stylua shfmt zed)
     if [[ $ONLY != all ]]; then
       packages=()
       if selected nvim; then packages+=(neovim lua-language-server stylua shfmt); fi

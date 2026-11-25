@@ -2,9 +2,8 @@
 
 An opinionated bootstrap for the development machines I support:
 
-- macOS with Zsh, Ghostty, Starship, Zed, Neovim, OpenCode, and Pi
-- Omarchy Linux with its shell and terminal defaults, plus Zed, Neovim,
-  OpenCode, and Pi configuration
+- macOS with Zsh, Ghostty, Starship, Zed, Neovim, and Pi
+- Omarchy Linux with its shell and terminal defaults, plus Zed, Neovim, and Pi
 
 Dotbento intentionally does not replace Omarchy's Bash, Starship, or terminal
 configuration.
@@ -17,8 +16,8 @@ each supported tool:
 - [bootstrap](docs/bootstrap.md) and [Git ownership](docs/git.md)
 - [Ghostty](docs/ghostty.md), [Zsh](docs/zsh.md), and
   [Starship](docs/starship.md)
-- [Neovim](docs/neovim.md), [Zed](docs/zed.md), [VS Code](docs/vscode.md),
-  [OpenCode](docs/opencode.md) and [Pi](docs/pi.md)
+- [Neovim](docs/neovim.md), [Zed](docs/zed.md), [VS Code](docs/vscode.md), and
+  [Pi](docs/pi.md)
 - the shared [visual system](docs/visual-system.md)
 
 ## Install
@@ -47,7 +46,6 @@ changes.
 |---|---:|---:|
 | Zed | settings and keymap merge | settings and keymap merge |
 | Neovim | symlink | copy |
-| OpenCode | symlink | symlink |
 | Pi | instructions/prompts/skills symlink; settings merge | instructions/prompts/skills symlink; settings merge |
 | Git | included from existing config | included from existing config |
 | Zsh, Starship, Ghostty | symlink | keep Omarchy defaults |
@@ -102,14 +100,6 @@ python3 vscode/export-profile.py > /tmp/Dotbento.code-profile
 In VS Code, open **File → Preferences → Profiles**, choose **Import Profile**
 from the **New Profile** menu, and select the generated file. See the
 [VS Code guide](docs/vscode.md) for shortcuts and formatter setup.
-
-## OpenCode
-
-`opencode/opencode.jsonc`, `opencode/AGENTS.md`, and `opencode/plan-agent.md`
-are linked into the detected XDG config directory. The adversarial review skill
-definition is tracked in `opencode/skills/plan-review-adversarial/SKILL.md`.
-Authentication remains in OpenCode's own credential store. Restart OpenCode
-after changing OpenCode files; configuration is loaded at startup.
 
 ## Pi
 
@@ -190,7 +180,7 @@ toolchains when they are installed. Homebrew's actual prefix is detected rather
 than assuming `/opt/homebrew`.
 
 `--packages` installs the command-line tools, Zsh plugins, Ghostty, Zed,
-OpenCode, and the required Nerd Font through Homebrew. Operator Mono remains an
+and the required Nerd Font through Homebrew. Operator Mono remains an
 optional commercial font.
 
 ## Omarchy
