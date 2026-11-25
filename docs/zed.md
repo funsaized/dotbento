@@ -11,6 +11,7 @@ Space is the LazyVim leader.
 | `Space e`, `Space ,`, `Space b d` | File tree, tab picker, close tab |
 | `[b` / `]b`, `Shift+H` / `Shift+L` | Previous / next tab |
 | `Ctrl+h/j/l`, `Ctrl+w k` | Focus the pane left, down, right, or up |
+| `Ctrl+b` | Toggle the left dock |
 | `gd`, `gr`, `K` | Definition, references, hover |
 | `Space c a`, `Space c r`, `Space c f` | Code actions, rename, format |
 | `[d` / `]d`, `Space s d` | Navigate diagnostics, open project diagnostics |

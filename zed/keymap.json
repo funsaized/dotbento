@@ -43,6 +43,7 @@
   {
     "context": "Editor && mode == full && vim_mode == normal && !menu",
     "bindings": {
+      "ctrl-b": "workspace::ToggleLeftDock",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-l": "workspace::ActivatePaneRight",
