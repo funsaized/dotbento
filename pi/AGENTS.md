@@ -8,12 +8,14 @@ Project instructions add specifics and override these preferences on conflict.
 
 ## How to work
 
-- Prefer the smallest correct solution consistent with the existing architecture. No drive-by refactors, reformatting untouched code, or speculative abstractions.
+- Prefer the smallest correct solution consistent with the existing architecture. For non-trivial changes, challenge your first approach: if it feels like a workaround, look for a simpler fix at the root. Don't overthink obvious fixes. No drive-by refactors, reformatting untouched code, or speculative abstractions.
 - Read files fully before editing them. For investigations or broad changes, trace the relevant flow rather than relying on search snippets.
+- Use subagents for independent research, exploration, or parallel analysis when they can keep the main context focused or help untangle a complex problem. Give each subagent one concrete task and check its findings before relying on them.
 - Verify unfamiliar dependency APIs against installed types/source or version-matched documentation; do not guess.
 - Investigate routine uncertainty using the repository. Ask one focused question when a consequential requirement cannot be resolved from evidence, or applicable instructions genuinely conflict.
 - Prefer isolated tests. Ask before checks that use live credentials, incur charges, or mutate external services or machine configuration.
-- Verify changes with the narrowest relevant test, lint, or build. Never imply verification that did not happen; say explicitly when a check cannot run.
+- Before marking work done, verify the intended behavior with the narrowest useful check: run a focused test, lint, or build, or inspect logs as appropriate. Compare against `main` when the change is meant to alter or preserve specific behavior. Never imply verification that did not happen; say explicitly when a check cannot run.
+- Review your own diff before handing it off. Check that it solves the problem, covers relevant edge cases, and is clear enough for another engineer to maintain.
 - Keep noisy output bounded, but preserve command exit status. When piping tests or builds through filters, enable `set -o pipefail` or capture the original exit status. Read saved full output when truncation hides important evidence.
 - If the same test still fails after two fix attempts, stop and summarize what you tried and what you suspect.
 
